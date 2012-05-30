@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, MeishiActivity!</string>
+    <string name="app_name">Meishi</string>
+    <string name="search_hint">请输入店名以搜索</string>
+    <string name="main_home">首页</string>
+    <string name="main_collect">我的收藏</string>
+    <string name="main_my_info">我的资料</string>
+    <string name="menu_search">广场</string>
+    <string name="more">更多</string>
+    <string name="shop_detail_min_send">起送金额：</string>
+    <string name="shop_detail_per_people">人均消费：</string>
+    <string name="shop_detail_shop_title">商户详情</string>
+    <string name="shop_detail_send_scope">送餐范围：</string>
+    <string name="shop_detail_send_introduction">送餐说明：</string>
+    <string name="shop_detail_comment_title">消费点评</string>
+    <string name="shop_detail_dianwaimai">点 外 卖</string>
+    <string name="dish_type">暂无</string>
+    <string name="order_condition">已点:0份 共0.0元</string>
+    <string name="order_return">返回</string>
+    <string name="order_next">下一步</string>
+    <string name="str_loading_more">点击查看更多</string>
+    <string name="confirm_order">请确认您的菜单</string>
+    <string name="order_allcose">总价:</string>
+    <string name="order_people">用餐人数:</string>
+    <string name="order_detail">订单详情</string>
+    <string name="order_note">备注(特别说明)</string>
+    <string name="note_default">（如有需要特别说明的地方，请添加备注）</string>
+    <string name="order_back">上一步</string>
+</resources>

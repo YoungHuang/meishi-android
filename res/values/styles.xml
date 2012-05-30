@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="main_tab_bottom">
+        <item name="android:textSize">@dimen/bottom_tab_font_size</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/home_btn_bg</item>
+        <item name="android:paddingTop">@dimen/bottom_tab_padding_up</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">@dimen/bottom_tab_padding_drawable</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+    <style name="text_normal_style">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#ff000000</item>
+    </style>
+    <style name="text_highlight_style">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#ffff6600</item>
+    </style>
+    <style name="text_content_style">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#ff666666</item>
+    </style>
+    <style name="title">
+        <item name="android:textSize">20.0sp</item>
+        <item name="android:textColor">#ffcc0033</item>
+        <item name="android:layout_marginBottom">5.0dip</item>
+        <item name="android:drawableLeft">@drawable/title_left</item>
+        <item name="android:drawableRight">@drawable/title_right</item>
+        <item name="android:drawablePadding">6.0dip</item>
+    </style>
+    <style name="step_bg">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/step_bg</item>
+        <item name="android:paddingTop">4.0dip</item>
+        <item name="android:paddingBottom">4.0dip</item>
+    </style>
+    <style name="left_step">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/selector_bg_btn_fav</item>
+        <item name="android:paddingTop">4.0dip</item>
+        <item name="android:paddingBottom">4.0dip</item>
+        <item name="android:layout_marginLeft">10.0dip</item>
+    </style>
+    <style name="step_pic">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginLeft">10.0dip</item>
+        <item name="android:layout_marginRight">10.0dip</item>
+    </style>
+    <style name="right_step">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/selector_bg_phone</item>
+        <item name="android:paddingTop">4.0dip</item>
+        <item name="android:paddingBottom">4.0dip</item>
+        <item name="android:layout_marginRight">10.0dip</item>
+    </style>
+</resources>

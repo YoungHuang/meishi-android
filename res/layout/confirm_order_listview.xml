@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1.0dip"
+        android:background="#20000000" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5.0dip"
+        android:layout_marginTop="5.0dip" >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="5.0dip"
+            android:layout_weight="1.0"
+            android:orientation="vertical" >
+            <TextView
+                android:id="@+id/dishName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="name"
+                android:textColor="#ff000000"
+                android:textSize="16.0sp" />
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="price"
+                android:textColor="#ffcc0033"
+                android:textSize="16.0sp" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="10.0dip"
+            android:gravity="right|center" >
+
+            <TextView
+                android:id="@+id/minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_btn_number_minus"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/number_bg"
+                android:gravity="center"
+                android:paddingLeft="4.0dip"
+                android:paddingRight="4.0dip"
+                android:text="3"
+                android:textColor="#ff000000"
+                android:textSize="16.0sp" />
+
+            <TextView
+                android:id="@+id/plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_btn_number_plus"
+                android:gravity="center" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
