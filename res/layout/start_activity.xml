@@ -8,11 +8,11 @@
   	<!-- 标题 -->
     <TextView
     	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
+    	android:layout_height="40dip"
     	android:gravity="center"
     	android:textSize="20.0sp"
     	android:textColor="#ffffffff"
-    	android:background="@drawable/logo_bg"
+    	android:background="@drawable/shape_title"
     	android:text="美 ‧ 食" />
     <!-- 搜索栏 -->
     <LinearLayout
