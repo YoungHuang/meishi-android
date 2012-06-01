@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ffffffff"
+    android:background="@color/white"
     android:orientation="vertical" >
 
     <!-- 标题 -->
     <TextView
     	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
+    	android:layout_height="40dip"
     	android:gravity="center"
     	android:textSize="20.0sp"
     	android:textColor="#ffffffff"
-    	android:background="@drawable/logo_bg"
-    	android:text="搜索" />
+    	android:background="@drawable/shape_title"
+    	android:text="@string/search" />
     <!-- 搜索栏 -->
     <LinearLayout
     	android:layout_width="fill_parent"
@@ -26,7 +26,7 @@
     	android:gravity="center">
     	<EditText
     		android:id="@+id/keywords"
-    		android:layout_width="wrap_content"
+    		android:layout_width="0dip"
     		android:layout_height="wrap_content"
     		android:background="@drawable/search_box"
     		android:hint="@string/search_hint"
@@ -43,14 +43,14 @@
             android:paddingLeft="10.0dip"
             android:paddingRight="10.0dip"
             android:paddingTop="5.0dip"
-            android:text="搜索"
+            android:text="@string/search"
             android:textColor="#ff000000"
             android:textSize="16.0sp" />
     </LinearLayout>
     <!-- 搜索结果列表 -->
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dip"
         android:layout_weight="1.0" >
 
         <ListView
@@ -89,7 +89,7 @@
             android:gravity="center"
             android:paddingBottom="8.0dip"
             android:paddingTop="8.0dip"
-            android:text="清空搜索记录"
+            android:text="@string/clear_search"
             android:textColor="#ff000000"
             android:textSize="18.0sp" />
     </LinearLayout>

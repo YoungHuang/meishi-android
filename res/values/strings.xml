@@ -7,6 +7,7 @@
     <string name="main_collect">我的收藏</string>
     <string name="main_my_info">我的资料</string>
     <string name="menu_search">广场</string>
+    <string name="search">搜索</string>
     <string name="more">更多</string>
     <string name="shop_detail_min_send">起送金额：</string>
     <string name="shop_detail_per_people">人均消费：</string>
@@ -27,4 +28,6 @@
     <string name="order_note">备注(特别说明)</string>
     <string name="note_default">（如有需要特别说明的地方，请添加备注）</string>
     <string name="order_back">上一步</string>
+    <string name="clear_search">清空搜索记录</string>
+    <string name="home_title">美 ‧ 食</string>
 </resources>

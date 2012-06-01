@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:background="@drawable/main_bg"
+  android:background="@color/white"
   android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
+  android:layout_height="fill_parent"
   android:orientation="vertical">
   	<!-- 标题 -->
     <TextView
@@ -13,7 +13,7 @@
     	android:textSize="20.0sp"
     	android:textColor="#ffffffff"
     	android:background="@drawable/shape_title"
-    	android:text="美 ‧ 食" />
+    	android:text="@string/home_title" />
     <!-- 搜索栏 -->
     <LinearLayout
     	android:layout_width="fill_parent"
@@ -38,7 +38,7 @@
     <!-- 商家列表 -->
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dip"
         android:layout_weight="1.0" >
         <ListView
             android:id="@+id/shopList"
