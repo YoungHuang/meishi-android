@@ -57,7 +57,7 @@ public class NetUtils {
 	}
 	
 	/**
-	 * 发送POST请求
+	 * 发送GET请求
 	 */
 	public static byte[] sendGetRequest(String path, Map<String, String> params, String enc) throws Exception {
 		Log.d(TAG, "sendGetRequest: " + path);

@@ -19,7 +19,14 @@ public class Shop {
 	/** 餐厅名 **/
 	private String name;
 	/** 地址 **/
-	private Address address;
+	private String province;
+	private String city;
+	private String district;
+	private String road;
+	/** 纬度 **/
+	private Double latitude;
+	/** 经度 **/
+	private Double longitude;
 	/** 评价 **/
 	private float rating;
 	/** 电话 **/
@@ -47,12 +54,52 @@ public class Shop {
 		this.name = name;
 	}
 
-	public Address getAddress() {
-		return address;
+	public String getProvince() {
+		return province;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getRoad() {
+		return road;
+	}
+
+	public void setRoad(String road) {
+		this.road = road;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 	public float getRating() {
@@ -102,8 +149,8 @@ public class Shop {
 				.put("name", name)
 				.put("rating", rating)
 				.put("phone", phone)
-				.put("startPrice", startPrice)
-				.put("address", address.beanToString());
+				.put("startPrice", startPrice);
+//				.put("address", address.beanToString());
 		} catch (JSONException e) {
 			Log.d(TAG, "beanToString() exception", e);
 		}
@@ -119,8 +166,8 @@ public class Shop {
 			rating = (float) object.getDouble("rating");
 			phone = object.getString("phone");
 			startPrice = object.getDouble("startPrice");
-			address = new Address();
-			address.setCity(object.getString("city"));
+//			address = new Address();
+//			address.setCity(object.getString("city"));
 //			address.stringToBean(object.getString("address"));
 			
 		} catch (JSONException e) {

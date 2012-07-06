@@ -1,6 +1,7 @@
 package meishi.service;
 
 import meishi.domain.Order;
+import meishi.network.NetworkService;
 import meishi.utils.GlobalData;
 import meishi.utils.NetUtils;
 
@@ -23,12 +24,14 @@ public class SubmitOrderTask extends Task {
 	@Override
 	public void execute() {
 		Order order = GlobalData.order;
-		String json = order.beanToString();
+//		String json = order.beanToString();
 		try {
-			byte[] data = NetUtils.sendPostRequest(url, json, NetUtils.enc);
-			String jsonString = new String(data, NetUtils.enc);
-			JSONObject object = new JSONObject(jsonString);
-			result = object.getString("result");
+//			byte[] data = NetUtils.sendPostRequest(url, json, NetUtils.enc);
+//			String jsonString = new String(data, NetUtils.enc);
+//			JSONObject object = new JSONObject(jsonString);
+//			result = object.getString("result");
+			
+			result = NetworkService.postForObject(url, order, String.class);
 		} catch (Exception e) {
 			Log.w(TAG, "searchShopListFromNet() exception: ", e);
 		}

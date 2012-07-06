@@ -26,7 +26,7 @@ public class ShopDetailActivity extends Activity implements OnClickListener {
 		TextView title = (TextView) this.findViewById(R.id.title);
 		title.setText(shop.getName());
 		TextView address = (TextView) this.findViewById(R.id.address);
-		address.setText(shop.getAddress().toString());
+		address.setText(shop.getCity());
 		TextView phone = (TextView) this.findViewById(R.id.phone);
 		phone.setText(shop.getPhone());
 		TextView description = (TextView) this.findViewById(R.id.description);

@@ -59,7 +59,7 @@ public class ShopListAdapter extends BaseAdapter {
 			TextView address = (TextView) view.findViewById(R.id.address);
 			final Shop shop = shopList.get(position);
 			shopName.setText(shop.getName());
-			address.setText(shop.getAddress().getCity());
+			address.setText(shop.getCity());
 
 			return view;
 		}

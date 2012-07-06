@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import meishi.domain.Shop;
+import meishi.network.NetworkService;
 import meishi.utils.NetUtils;
 
 import org.json.JSONArray;
@@ -45,14 +46,19 @@ public class SearchShopListFromNetTask extends Task {
 	@Override
 	public void execute() {
 		try {
-			byte[] data = NetUtils.sendGetRequest(url, params, "UTF-8");
-			String json = new String(data, "UTF-8");
-			JSONArray jsonarray = new JSONArray(json);
-			for (int i = 0; i < jsonarray.length(); i++) {
-				JSONObject jsonobject = jsonarray.getJSONObject(i);
-				Shop shop = new Shop();
-				shop.stringToBean(jsonobject.toString());
-				shopList.add(shop);
+//			byte[] data = NetUtils.sendGetRequest(url, params, "UTF-8");
+//			String json = new String(data, "UTF-8");
+//			JSONArray jsonarray = new JSONArray(json);
+//			for (int i = 0; i < jsonarray.length(); i++) {
+//				JSONObject jsonobject = jsonarray.getJSONObject(i);
+//				Shop shop = new Shop();
+//				shop.stringToBean(jsonobject.toString());
+//				shopList.add(shop);
+//			}
+			
+			List<Shop> shops = NetworkService.getForObject(url, List.class, params);
+			if (shops != null) {
+				shopList = shops;
 			}
 		} catch (Exception e) {
 			Log.w(TAG, "searchShopListFromNet() exception: ", e);

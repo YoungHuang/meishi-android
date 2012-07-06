@@ -28,9 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
 			shop.setRating(0.5f + i);
 			shop.setPhone("5555");
 			shop.setStartPrice(20d);
-			Address address = new Address();
-			address.setCity("nanjing");
-			shop.setAddress(address);
+			shop.setCity("nanjing");
 			String sql = "insert into recentlyHistory(content, date) values(?, ?)";
 			String content = shop.beanToString();
 			db.execSQL(sql, new Object[] {content, new Date().getTime()});
