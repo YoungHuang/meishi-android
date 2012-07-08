@@ -1,7 +1,7 @@
 package meishi.ui;
 
+import meishi.network.NetworkService;
 import meishi.persistence.DBManager;
-import meishi.utils.NetUtils;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,7 +56,7 @@ public class LogoActivity extends Activity {
 		startService(mainService);
 		
 		// 检查网络
-		if (!NetUtils.isNetworkActive(this)) {
+		if (!NetworkService.isNetworkActive(this)) {
 			Toast.makeText(this, "网络连接失败", Toast.LENGTH_SHORT);
 		}
 	}

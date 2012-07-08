@@ -1,15 +1,16 @@
 package meishi.service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import meishi.domain.Dish;
-import meishi.utils.NetUtils;
+import meishi.domain.Shop;
+import meishi.network.NetworkService;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.reflect.TypeToken;
 
 import android.util.Log;
 
@@ -22,7 +23,7 @@ import android.util.Log;
 public class GetDishListFromNetTask extends Task {
 	private static final String TAG = "GetDishListFromNetTask";
 	
-	private static final String url = NetUtils.dishListUrl;
+	private static final String url = NetworkService.dishListUrl;
 	private List<Dish> dishList = new ArrayList<Dish>();
 	private Map<String, String> params = new HashMap<String, String>();
 	
@@ -36,14 +37,10 @@ public class GetDishListFromNetTask extends Task {
 	@Override
 	public void execute() {
 		try {
-			byte[] data = NetUtils.sendGetRequest(url, params, "UTF-8");
-			String json = new String(data, "UTF-8");
-			JSONArray jsonarray = new JSONArray(json);
-			for (int i = 0; i < jsonarray.length(); i++) {
-				JSONObject jsonobject = jsonarray.getJSONObject(i);
-				Dish dish = new Dish();
-				dish.stringToBean(jsonobject.toString());
-				dishList.add(dish);
+			Type type = new TypeToken<List<Shop>>(){}.getType();
+			List<Dish> dishes = NetworkService.getForList(url, type, params);
+			if (dishes != null) {
+				dishList = dishes;
 			}
 		} catch (Exception e) {
 			Log.w(TAG, "execute() exception: ", e);

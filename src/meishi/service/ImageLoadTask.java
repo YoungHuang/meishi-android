@@ -1,6 +1,6 @@
 package meishi.service;
 
-import meishi.utils.NetUtils;
+import meishi.network.NetworkService;
 import android.graphics.drawable.Drawable;
 
 
@@ -16,7 +16,7 @@ public class ImageLoadTask extends Task {
 	
 	@Override
 	public void execute() {
-		image = NetUtils.getImageFromUrl(url);
+		image = NetworkService.getImageFromUrl(url);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package meishi.service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,18 +8,15 @@ import java.util.Map;
 
 import meishi.domain.Shop;
 import meishi.network.NetworkService;
-import meishi.utils.NetUtils;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.util.Log;
+
+import com.google.gson.reflect.TypeToken;
 
 
 public class SearchShopListFromNetTask extends Task {
 	private static final String TAG = "SearchShopListFromNetTask";
 	private List<Shop> shopList = new ArrayList<Shop>();
-	private static final String url = NetUtils.hostUrl + "/shop/search";
+	private static final String url = NetworkService.hostUrl + "/shop/search";
 	private Map<String, String> params;
 
 	public SearchShopListFromNetTask(int offset, int maxResult, RefreshCallBack callBack) {
@@ -45,18 +43,9 @@ public class SearchShopListFromNetTask extends Task {
 	
 	@Override
 	public void execute() {
-		try {
-//			byte[] data = NetUtils.sendGetRequest(url, params, "UTF-8");
-//			String json = new String(data, "UTF-8");
-//			JSONArray jsonarray = new JSONArray(json);
-//			for (int i = 0; i < jsonarray.length(); i++) {
-//				JSONObject jsonobject = jsonarray.getJSONObject(i);
-//				Shop shop = new Shop();
-//				shop.stringToBean(jsonobject.toString());
-//				shopList.add(shop);
-//			}
-			
-			List<Shop> shops = NetworkService.getForObject(url, List.class, params);
+		try {	
+			Type type = new TypeToken<List<Shop>>(){}.getType();
+			List<Shop> shops = NetworkService.getForList(url, type, params);
 			if (shops != null) {
 				shopList = shops;
 			}

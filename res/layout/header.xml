@@ -4,33 +4,37 @@
     android:layout_height="40dip"
     android:background="@drawable/shape_title"
     android:orientation="vertical" >
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
         android:layout_centerVertical="true"
-        android:background="@drawable/selector_btn_header"
         android:layout_marginLeft="6.0dip"
+        android:background="@drawable/selector_btn_header"
         android:gravity="center"
+        android:text="Button"
         android:textColor="@color/white"
         android:textSize="12.0sp" />
+
     <TextView
-    	android:layout_width="wrap_content"
-    	android:layout_height="40dip"
-    	android:gravity="center"
-    	android:layout_centerInParent="true"
-    	android:textSize="20.0sp"
-    	android:textColor="@color/white"
-    	android:text="@string/home_title" />
+        android:layout_width="wrap_content"
+        android:layout_height="40dip"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/home_title"
+        android:textColor="@color/white"
+        android:textSize="20.0sp" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="Button"
         android:layout_centerVertical="true"
-        android:background="@drawable/selector_btn_header"
         android:layout_marginRight="6.0dip"
+        android:background="@drawable/selector_btn_header"
         android:gravity="center"
+        android:text="Button"
         android:textColor="@color/white"
         android:textSize="12.0sp" />
+
 </RelativeLayout>

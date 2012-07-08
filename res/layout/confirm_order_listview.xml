@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5.0dip"
         android:layout_marginTop="5.0dip" >
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,6 +22,7 @@
             android:layout_marginRight="5.0dip"
             android:layout_weight="1.0"
             android:orientation="vertical" >
+
             <TextView
                 android:id="@+id/dishName"
                 android:layout_width="fill_parent"
@@ -37,7 +39,7 @@
                 android:textColor="#ffcc0033"
                 android:textSize="16.0sp" />
         </LinearLayout>
-        
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,4 +74,5 @@
                 android:gravity="center" />
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

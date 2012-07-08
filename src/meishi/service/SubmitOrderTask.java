@@ -3,17 +3,13 @@ package meishi.service;
 import meishi.domain.Order;
 import meishi.network.NetworkService;
 import meishi.utils.GlobalData;
-import meishi.utils.NetUtils;
-
-import org.json.JSONObject;
-
 import android.util.Log;
 
 
 public class SubmitOrderTask extends Task {
 	private static final String TAG = "SubmitOrderTask";
 	
-	private static final String url = NetUtils.submitOrderUrl;
+	private static final String url = NetworkService.submitOrderUrl;
 	
 	private String result;
 	

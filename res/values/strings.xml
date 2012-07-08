@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="hello">Hello World, MeishiActivity!</string>
     <string name="app_name">Meishi</string>
     <string name="search_hint">请输入店名以搜索</string>
@@ -30,4 +31,5 @@
     <string name="order_back">上一步</string>
     <string name="clear_search">清空搜索记录</string>
     <string name="home_title">美 ‧ 食</string>
+
 </resources>

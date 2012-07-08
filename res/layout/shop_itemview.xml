@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="horizontal"
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:gravity="center_vertical"
-  android:background="@drawable/list_item_bg">
-	<LinearLayout
-		android:orientation="vertical"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<!-- 店名 -->
-	    <TextView
-	    	android:id="@+id/shopName"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:singleLine="true"
-			android:textSize="18.0sp"
-			android:textColor="#ff000000"
-			android:text="Shop name" />
-		<!-- 地址 -->
-		<TextView
-			android:id="@+id/address"
-			android:textSize="14.0sp"
-			android:textColor="#ff888888"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="address"
-			android:drawableLeft="@drawable/ic_add"
-			android:drawablePadding="2.0dip" />
-	</LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <!-- 店名 -->
+
+        <TextView
+            android:id="@+id/shopName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="Shop name"
+            android:textColor="#ff000000"
+            android:textSize="18.0sp" />
+        <!-- 地址 -->
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_add"
+            android:drawablePadding="2.0dip"
+            android:text="address"
+            android:textColor="#ff888888"
+            android:textSize="14.0sp" />
+    </LinearLayout>
+
 </LinearLayout>
