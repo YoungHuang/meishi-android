@@ -12,7 +12,6 @@
         android:orientation="vertical" >
 
         <!-- 店名 -->
-
         <TextView
             android:id="@+id/shopName"
             android:layout_width="fill_parent"
@@ -21,8 +20,8 @@
             android:text="Shop name"
             android:textColor="#ff000000"
             android:textSize="18.0sp" />
+        
         <!-- 地址 -->
-
         <TextView
             android:id="@+id/address"
             android:layout_width="fill_parent"

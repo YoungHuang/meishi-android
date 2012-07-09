@@ -13,8 +13,9 @@ import android.widget.TextView;
 
 /**
  * 商家列表Adapter
+ * 
  * @author yonghuang
- *
+ * 
  */
 public class ShopListAdapter extends BaseAdapter {
 
@@ -47,22 +48,25 @@ public class ShopListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = null;
-
 		if (position == getCount() - 1) {// 更多
-			view = LayoutInflater.from(context).inflate(R.layout.list_moreitems, null);
-
-			return view;
+			convertView = LayoutInflater.from(context).inflate(R.layout.list_moreitems, null);
 		} else {
-			view = LayoutInflater.from(context).inflate(R.layout.shop_itemview, null);
-			TextView shopName = (TextView) view.findViewById(R.id.shopName);
-			TextView address = (TextView) view.findViewById(R.id.address);
-			final Shop shop = shopList.get(position);
-			shopName.setText(shop.getName());
-			address.setText(shop.getCity());
-
-			return view;
+			Holder holder;
+			if (convertView == null) {
+				convertView = LayoutInflater.from(context).inflate(R.layout.shop_itemview, null);
+				holder = new Holder();
+				holder.shopName = (TextView) convertView.findViewById(R.id.shopName);
+				holder.address = (TextView) convertView.findViewById(R.id.address);
+				convertView.setTag(holder);
+			} else {
+				holder = (Holder) convertView.getTag();
+			}
+			Shop shop = shopList.get(position);
+			holder.shopName.setText(shop.getName());
+			holder.address.setText(shop.getCity());
 		}
+		
+		return convertView;
 	}
 
 	public void addMoreItems(List<Shop> moreShopList) {
@@ -70,5 +74,10 @@ public class ShopListAdapter extends BaseAdapter {
 			shopList.addAll(moreShopList);
 			this.notifyDataSetChanged();
 		}
+	}
+
+	private class Holder {
+		TextView shopName;
+		TextView address;
 	}
 }
