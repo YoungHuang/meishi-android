@@ -57,7 +57,7 @@ public class LogoActivity extends Activity {
 		
 		// 检查网络
 		if (!NetworkService.isNetworkActive(this)) {
-			Toast.makeText(this, "网络连接失败", Toast.LENGTH_SHORT);
+			Toast.makeText(this, "网络连接失败", Toast.LENGTH_SHORT).show();
 		}
 	}
 }

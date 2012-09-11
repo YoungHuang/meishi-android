@@ -23,10 +23,10 @@ public class Order {
 	private Integer totalCount = 0;
 	private Integer people = 0;
 	private String description;
-	private List<OrderDish> orderDishList = new ArrayList<OrderDish>();
+	private List<OrderItem> orderDishList = new ArrayList<OrderItem>();
 
-	public OrderDish findOrderDish(Integer dishId) {
-		for (OrderDish orderDish : orderDishList) {
+	public OrderItem findOrderDish(Integer dishId) {
+		for (OrderItem orderDish : orderDishList) {
 			if (orderDish.getDish().getId().equals(dishId))
 				return orderDish;
 		}
@@ -34,11 +34,11 @@ public class Order {
 		return null;
 	}
 
-	public void addOrderDish(OrderDish orderDish) {
+	public void addOrderDish(OrderItem orderDish) {
 		orderDishList.add(orderDish);
 	}
 	
-	public void deleteOrderDish(OrderDish orderDish) {
+	public void deleteOrderDish(OrderItem orderDish) {
 		orderDishList.remove(orderDish);
 	}
 	
@@ -82,11 +82,11 @@ public class Order {
 		this.people = people;
 	}
 
-	public List<OrderDish> getOrderDishList() {
+	public List<OrderItem> getOrderDishList() {
 		return orderDishList;
 	}
 
-	public void setOrderDishList(List<OrderDish> orderDishList) {
+	public void setOrderDishList(List<OrderItem> orderDishList) {
 		this.orderDishList = orderDishList;
 	}
 
@@ -103,7 +103,7 @@ public class Order {
 		try {
 			object.put("people", people);
 			JSONArray jsonarray = new JSONArray();
-			for (OrderDish orderDish : orderDishList) {
+			for (OrderItem orderDish : orderDishList) {
 				JSONObject obj = new JSONObject();
 				obj.put("id", orderDish.getDish().getId());
 				obj.put("count", orderDish.getCount());

@@ -4,7 +4,7 @@ import java.util.List;
 
 import meishi.domain.Dish;
 import meishi.domain.Order;
-import meishi.domain.OrderDish;
+import meishi.domain.OrderItem;
 import meishi.domain.Shop;
 import meishi.service.GetDishListFromNetTask;
 import meishi.service.MainService;
@@ -168,7 +168,7 @@ public class DishActivity extends Activity implements OnClickListener, OnItemCli
 				TextView plus = (TextView) view.findViewById(R.id.plus);
 				final TextView countView = (TextView) view.findViewById(R.id.count);
 				
-				OrderDish orderDish = order.findOrderDish(dish.getId());
+				OrderItem orderDish = order.findOrderDish(dish.getId());
 				if (orderDish != null) {
 					countView.setText(orderDish.getCount().toString());
 				}
@@ -179,7 +179,7 @@ public class DishActivity extends Activity implements OnClickListener, OnItemCli
 						Integer count = Integer.valueOf(countView.getText().toString());
 						Double totalAmount = order.getTotalAmount();
 						Integer totalCount = order.getTotalCount();
-						OrderDish orderDish = order.findOrderDish(dish.getId());
+						OrderItem orderDish = order.findOrderDish(dish.getId());
 						switch(v.getId()) {
 						case R.id.minus: // 减少一份
 							if (count == 0)
@@ -199,7 +199,7 @@ public class DishActivity extends Activity implements OnClickListener, OnItemCli
 							totalCount++;
 							totalAmount += dish.getPrice();
 							if (count == 1) { // 添加OrderDish
-								orderDish = new OrderDish();
+								orderDish = new OrderItem();
 								orderDish.setDish(dish);
 								order.addOrderDish(orderDish);
 							}

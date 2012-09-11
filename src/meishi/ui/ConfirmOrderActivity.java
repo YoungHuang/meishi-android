@@ -4,7 +4,7 @@ import java.util.List;
 
 import meishi.domain.Dish;
 import meishi.domain.Order;
-import meishi.domain.OrderDish;
+import meishi.domain.OrderItem;
 import meishi.service.MainService;
 import meishi.service.RefreshCallBack;
 import meishi.service.SubmitOrderTask;
@@ -102,10 +102,10 @@ public class ConfirmOrderActivity extends Activity implements OnClickListener {
 	}
 	
 	class ListAdapter extends BaseAdapter {
-		private List<OrderDish> dishList;
+		private List<OrderItem> dishList;
 		private Context context;
 		
-		public ListAdapter(Context context, List<OrderDish> dishList) {
+		public ListAdapter(Context context, List<OrderItem> dishList) {
 			this.context = context;
 			this.dishList = dishList;
 		}
@@ -140,7 +140,7 @@ public class ConfirmOrderActivity extends Activity implements OnClickListener {
 			TextView minus = (TextView) view.findViewById(R.id.minus);
 			TextView plus = (TextView) view.findViewById(R.id.plus);
 			final TextView countView = (TextView) view.findViewById(R.id.count);
-			final OrderDish orderDish = dishList.get(position);
+			final OrderItem orderDish = dishList.get(position);
 			countView.setText(orderDish.getCount().toString());
 			
 			View.OnClickListener listener = new View.OnClickListener() {

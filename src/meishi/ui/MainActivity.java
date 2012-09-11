@@ -21,7 +21,7 @@ public class MainActivity extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.maintabs);
+		this.setContentView(R.layout.main_activity);
 		
 		tabHost = this.getTabHost();
 		// 创建tab页
