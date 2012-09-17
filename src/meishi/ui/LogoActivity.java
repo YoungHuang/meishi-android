@@ -1,7 +1,7 @@
 package meishi.ui;
 
+import meishi.db.DBManager;
 import meishi.network.NetworkService;
-import meishi.persistence.DBManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

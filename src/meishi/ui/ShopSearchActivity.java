@@ -2,8 +2,8 @@ package meishi.ui;
 
 import java.util.List;
 
+import meishi.db.SearchHistoryDao;
 import meishi.domain.Shop;
-import meishi.persistence.SearchHistoryDao;
 import meishi.service.MainService;
 import meishi.service.RefreshCallBack;
 import meishi.service.SearchShopListFromNetTask;

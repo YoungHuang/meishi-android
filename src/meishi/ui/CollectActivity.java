@@ -2,8 +2,8 @@ package meishi.ui;
 
 import java.util.List;
 
+import meishi.db.DBManager;
 import meishi.domain.Shop;
-import meishi.persistence.DBManager;
 import meishi.utils.ShopListAdapter;
 import android.app.Activity;
 import android.content.Intent;
