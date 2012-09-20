@@ -1,6 +1,6 @@
 package meishi.domain;
 
-public class Area {
+public class District {
 	private String name;
 
 	public String getName() {

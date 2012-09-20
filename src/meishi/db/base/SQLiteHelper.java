@@ -2,8 +2,8 @@ package meishi.db.base;
 
 import java.util.Date;
 
-import meishi.db.AreaService;
 import meishi.domain.Shop;
+import meishi.service.AreaService;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;

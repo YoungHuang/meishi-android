@@ -3,8 +3,9 @@ package meishi.ui;
 import java.util.List;
 
 import meishi.MainApplication;
-import meishi.db.HotAreaService;
 import meishi.domain.HotArea;
+import meishi.service.AsyncTaskCallBack;
+import meishi.service.HotAreaService;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,15 +13,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 public class HomeActivity extends Activity implements View.OnClickListener, OnItemClickListener {
 	private static final String TAG = "HomeActivity";
 	
 	private HotAreaService hotAreaService;
 	
-	private ListView hotAreaListView;
+	private ArrayAdapter<HotArea> adapter;
+	private ProgressBar progressBar;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +46,29 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 	}
 	
 	private void initAreaList() {
-		hotAreaListView = (ListView) this.findViewById(R.id.hotAreaList);
-		List<HotArea> hotAreaList = hotAreaService.findAll();
+		final ListView hotAreaListView = (ListView) findViewById(R.id.hotAreaList);
+		progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		hotAreaListView.setOnItemClickListener(this);
+		
+		final HotArea moreArea = new HotArea();
+		moreArea.setName("more areas");
+		
+		List<HotArea> hotAreaList = hotAreaService.getAll(new AsyncTaskCallBack<List<HotArea>>() {
+			@Override
+			public void refresh(List<HotArea> hotAreaList) {
+				progressBar.setVisibility(View.GONE);
+				hotAreaListView.setVisibility(View.VISIBLE);
+				hotAreaList.add(moreArea);
+				adapter = new ArrayAdapter<HotArea>(HomeActivity.this, android.R.layout.simple_list_item_1, hotAreaList);
+				hotAreaListView.setAdapter(adapter);
+			}
+		});
 		if (hotAreaList != null) {
-			
-		} else {
-			
+			progressBar.setVisibility(View.GONE);
+			hotAreaListView.setVisibility(View.VISIBLE);
+			hotAreaList.add(moreArea);
+			adapter = new ArrayAdapter<HotArea>(this, android.R.layout.simple_list_item_1, hotAreaList);
+			hotAreaListView.setAdapter(adapter);
 		}
 	}
 
@@ -63,6 +84,11 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		
+		HotArea hotArea = adapter.getItem(position);
+		if (hotArea.getCity() == null) {
+			
+		} else {
+			
+		}
 	}
 }
