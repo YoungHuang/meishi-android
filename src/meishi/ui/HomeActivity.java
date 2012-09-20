@@ -37,7 +37,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 		EditText keywords = (EditText) this.findViewById(R.id.keywords);
 		keywords.setOnClickListener(this);
 		
-		initAreaList();
+		initHotAreaList();
 	}
 
 	private void initVariables() {
@@ -45,7 +45,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 		hotAreaService = application.getHotAreaService();
 	}
 	
-	private void initAreaList() {
+	private void initHotAreaList() {
 		final ListView hotAreaListView = (ListView) findViewById(R.id.hotAreaList);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		hotAreaListView.setOnItemClickListener(this);
@@ -86,7 +86,8 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		HotArea hotArea = adapter.getItem(position);
 		if (hotArea.getCity() == null) {
-			
+			Intent intent = new Intent(this, AreaListActivity.class);
+			this.startActivity(intent);
 		} else {
 			
 		}
