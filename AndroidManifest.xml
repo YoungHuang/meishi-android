@@ -34,7 +34,7 @@
             android:name=".ConfirmOrderActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".ShopSearchActivity"
+            android:name=".ShopSearchActivity2"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service android:name="meishi.service.MainService" >

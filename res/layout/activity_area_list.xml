@@ -20,7 +20,10 @@
             android:dividerHeight="1.0dip"
             android:visibility="gone" />
         
-        <include />
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/list_empty" />/
     </LinearLayout>
 
 </LinearLayout>

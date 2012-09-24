@@ -5,7 +5,6 @@ import java.util.List;
 import meishi.db.base.DaoSupport;
 import meishi.domain.HotArea;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.util.Log;
 
 public class HotAreaService extends DaoSupport<HotArea> {
@@ -14,33 +13,31 @@ public class HotAreaService extends DaoSupport<HotArea> {
 	public static void onCreate(SQLiteDatabase db) {
 		Log.d(TAG, "createTable");
 	}
-
-	public List<HotArea> getAll(AsyncTaskCallBack<List<HotArea>> callBack) {
-		List<HotArea> hotAreaList = findAll();
-
-		if (hotAreaList == null) {
-			new HotAreaTask(callBack).execute(null);
-		}
-
-		return hotAreaList;
+	
+	public List<HotArea> findAllByCityId(Integer cityId) {
+		// TODO
+		return null;
 	}
 
-	private class HotAreaTask extends AsyncTask<Void, Void, List<HotArea>> {
-		private AsyncTaskCallBack<List<HotArea>> callBack;
+	public void loadAll(Integer cityId, AsyncTaskCallBack<List<HotArea>> callBack) {
+		List<HotArea> hotAreaList = findAllByCityId(cityId);
 
-		public HotAreaTask(AsyncTaskCallBack<List<HotArea>> callBack) {
+		if (hotAreaList == null) {
+			new HotAreaAsyncTask(callBack).execute(cityId);
+		} else {
+			callBack.refresh(hotAreaList);
+		}
+	}
+
+	private class HotAreaAsyncTask extends BaseAsyncTask<Integer, Void, List<HotArea>> {
+		public HotAreaAsyncTask(AsyncTaskCallBack<List<HotArea>> callBack) {
 			this.callBack = callBack;
 		}
 
 		@Override
-		protected List<HotArea> doInBackground(Void... params) {
+		protected List<HotArea> doInBackground(Integer... params) {
 
 			return null;
-		}
-
-		@Override
-		protected void onPostExecute(List<HotArea> hotAreaList) {
-			callBack.refresh(hotAreaList);
 		}
 	}
 }

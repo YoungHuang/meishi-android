@@ -59,7 +59,7 @@ public class StartActivity extends Activity implements View.OnClickListener, OnI
 	public void onClick(View v) {
 		switch(v.getId()) {
 		case R.id.keywords: // 搜索栏
-			Intent intent = new Intent(this, ShopSearchActivity.class);
+			Intent intent = new Intent(this, ShopSearchActivity2.class);
 			this.startActivity(intent);
 			break;
 		}

@@ -3,6 +3,8 @@ package meishi.ui;
 import java.util.List;
 
 import meishi.MainApplication;
+import meishi.db.PreferenceService;
+import meishi.domain.City;
 import meishi.domain.HotArea;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.HotAreaService;
@@ -21,6 +23,7 @@ import android.widget.ProgressBar;
 public class HomeActivity extends Activity implements View.OnClickListener, OnItemClickListener {
 	private static final String TAG = "HomeActivity";
 	
+	private PreferenceService preferenceService;
 	private HotAreaService hotAreaService;
 	
 	private ArrayAdapter<HotArea> adapter;
@@ -43,40 +46,34 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 	private void initVariables() {
 		MainApplication application = (MainApplication) getApplicationContext();
 		hotAreaService = application.getHotAreaService();
+		preferenceService = application.getPreferenceService();
 	}
 	
 	private void initHotAreaList() {
 		final ListView hotAreaListView = (ListView) findViewById(R.id.hotAreaList);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		hotAreaListView.setOnItemClickListener(this);
+		City city = preferenceService.getCity();
 		
-		final HotArea moreArea = new HotArea();
-		moreArea.setName("more areas");
-		
-		List<HotArea> hotAreaList = hotAreaService.getAll(new AsyncTaskCallBack<List<HotArea>>() {
+		hotAreaService.loadAll(city.getId(), new AsyncTaskCallBack<List<HotArea>>() {
 			@Override
 			public void refresh(List<HotArea> hotAreaList) {
 				progressBar.setVisibility(View.GONE);
 				hotAreaListView.setVisibility(View.VISIBLE);
+				HotArea moreArea = new HotArea();
+				moreArea.setName("more areas");
 				hotAreaList.add(moreArea);
 				adapter = new ArrayAdapter<HotArea>(HomeActivity.this, android.R.layout.simple_list_item_1, hotAreaList);
 				hotAreaListView.setAdapter(adapter);
 			}
 		});
-		if (hotAreaList != null) {
-			progressBar.setVisibility(View.GONE);
-			hotAreaListView.setVisibility(View.VISIBLE);
-			hotAreaList.add(moreArea);
-			adapter = new ArrayAdapter<HotArea>(this, android.R.layout.simple_list_item_1, hotAreaList);
-			hotAreaListView.setAdapter(adapter);
-		}
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()) {
 		case R.id.keywords:
-			Intent intent = new Intent(this, ShopSearchActivity.class);
+			Intent intent = new Intent(this, ShopSearchActivity2.class);
 			this.startActivity(intent);
 			break;
 		}

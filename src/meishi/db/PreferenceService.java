@@ -15,8 +15,9 @@ public class PreferenceService {
 	private final static String CITY_NAME = "CityName";
 	
 	private CityService cityService;
-	
 	private SharedPreferences preferences;
+	
+	private City city;
 	
 	public PreferenceService(Context context, CityService cityService) {
 		preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -24,11 +25,16 @@ public class PreferenceService {
 	}
 	
 	public void setCity(City city) {
+		this.city = city;
 		preferences.edit().putString(CITY_NAME, city.getName()).commit();
 	}
 	
 	public City getCity() {
-		String name = preferences.getString(CITY_NAME, null);
-		return cityService.findByName(name);
+		if (city == null) {
+			String name = preferences.getString(CITY_NAME, null);
+			city = cityService.findByName(name);
+		}
+		
+		return city;
 	}
 }
