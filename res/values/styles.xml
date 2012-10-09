@@ -89,4 +89,10 @@
         <item name="android:maxLines">1</item>
     </style>
 
+    <style name="custom_rating_bar" parent="@android:style/Widget.RatingBar">
+        <item name="android:maxHeight">16.0dip</item>
+        <item name="android:progressDrawable">@drawable/custom_rating_bar</item>
+        <item name="android:minHeight">16.0dip</item>
+    </style>
+
 </resources>
