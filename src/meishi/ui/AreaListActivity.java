@@ -11,6 +11,7 @@ import meishi.service.AreaService;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.DistrictService;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,6 +60,9 @@ public class AreaListActivity extends Activity {
 		districtService.loadAllByCityId(city.getId(), new AsyncTaskCallBack<List<District>>() {
 			@Override
 			public void refresh(List<District> districtList) {
+				if (districtList == null)
+					return;
+				
 				loadingLayout.setVisibility(View.GONE);
 				areaListView.setVisibility(View.VISIBLE);
 				District district = new District();
@@ -127,12 +131,14 @@ public class AreaListActivity extends Activity {
 				groupHolder = (GroupHolder) convertView.getTag();
 			}
 			
-			District district = districtList.get(groupPosition);
+			final District district = districtList.get(groupPosition);
 			groupHolder.name.setText(district.getName());
 			groupHolder.name.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// TODO
+					Intent intent = new Intent(AreaListActivity.this, ShopSearchActivity.class);
+					intent.putExtra("districtId", district.getId());
+					AreaListActivity.this.startActivity(intent);
 				}
 			});
 			

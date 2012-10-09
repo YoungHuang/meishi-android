@@ -23,7 +23,7 @@
         <include
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            layout="@layout/list_empty" />/
+            layout="@layout/list_empty" />
     </LinearLayout>
 
 </LinearLayout>

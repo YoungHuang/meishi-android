@@ -72,12 +72,21 @@
         <item name="android:paddingBottom">4.0dip</item>
         <item name="android:layout_marginRight">10.0dip</item>
     </style>
-    
+
     <style name="list_layout">
         <item name="android:paddingLeft">6.0dip</item>
         <item name="android:paddingTop">0.0dip</item>
         <item name="android:paddingRight">6.0dip</item>
         <item name="android:paddingBottom">0.0dip</item>
+    </style>
+
+    <style name="spinner">
+        <item name="android:textSize">15.0sp</item>
+        <item name="android:textColor">#ff333333</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/btn_dropdown</item>
+        <item name="android:clickable">true</item>
+        <item name="android:maxLines">1</item>
     </style>
 
 </resources>
