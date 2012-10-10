@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/item_bg_feeddetail"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="15.0dip"
+    android:paddingTop="12.0dip" >
+
+    <LinearLayout
+        android:id="@+id/more_load_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:gravity="center" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="25.0dip"
+            android:layout_height="25.0dip"
+            android:layout_marginRight="6.0dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18.0dip"
+            android:textColor="#ffc96300"
+            android:textStyle="bold"
+            android:text="@string/global_loading" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/more_exception_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/text_ex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18.0dip"
+            android:textColor="#ffc96300"
+            android:textStyle="bold"
+            android:text="@string/list_more_exception" />
+
+        <TextView
+            android:id="@+id/text_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff0000ff"
+            android:text="@string/list_timeout_text" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -10,6 +10,7 @@ import meishi.domain.District;
 import meishi.service.AreaService;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.DistrictService;
+import meishi.utils.ResponseCode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -59,7 +60,7 @@ public class AreaListActivity extends Activity {
 		
 		districtService.loadAllByCityId(city.getId(), new AsyncTaskCallBack<List<District>>() {
 			@Override
-			public void refresh(List<District> districtList) {
+			public void refresh(List<District> districtList, ResponseCode code) {
 				if (districtList == null)
 					return;
 				

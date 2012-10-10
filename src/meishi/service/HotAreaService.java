@@ -4,6 +4,7 @@ import java.util.List;
 
 import meishi.db.base.DaoSupport;
 import meishi.domain.HotArea;
+import meishi.utils.ResponseCode;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -25,7 +26,7 @@ public class HotAreaService extends DaoSupport<HotArea> {
 		if (hotAreaList == null) {
 			new HotAreaAsyncTask(callBack).execute(cityId);
 		} else {
-			callBack.refresh(hotAreaList);
+			callBack.refresh(hotAreaList, ResponseCode.SUCCESS);
 		}
 	}
 

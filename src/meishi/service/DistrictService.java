@@ -4,6 +4,7 @@ import java.util.List;
 
 import meishi.db.base.DaoSupport;
 import meishi.domain.District;
+import meishi.utils.ResponseCode;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -25,7 +26,7 @@ public class DistrictService extends DaoSupport<District> {
 		if (districtList == null) {
 			new DistrictAsyncTask(callBack).execute(cityId);
 		} else {
-			callBack.refresh(districtList);
+			callBack.refresh(districtList, ResponseCode.SUCCESS);
 		}
 	}
 	

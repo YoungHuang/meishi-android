@@ -8,6 +8,7 @@ import meishi.domain.City;
 import meishi.domain.HotArea;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.HotAreaService;
+import meishi.utils.ResponseCode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 		
 		hotAreaService.loadAll(city.getId(), new AsyncTaskCallBack<List<HotArea>>() {
 			@Override
-			public void refresh(List<HotArea> hotAreaList) {
+			public void refresh(List<HotArea> hotAreaList, ResponseCode code) {
 				progressBar.setVisibility(View.GONE);
 				hotAreaListView.setVisibility(View.VISIBLE);
 				HotArea moreArea = new HotArea();
