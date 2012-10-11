@@ -1,16 +1,8 @@
 package meishi.domain;
 
 public class HotArea {
-	private City city;
 	private String name;
-
-	public City getCity() {
-		return city;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-	}
+	private Integer cityId;
 
 	public String getName() {
 		return name;
@@ -20,6 +12,14 @@ public class HotArea {
 		this.name = name;
 	}
 	
+	public Integer getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
+
 	@Override
 	public String toString() {
 		return name;

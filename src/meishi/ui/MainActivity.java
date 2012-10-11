@@ -26,7 +26,7 @@ public class MainActivity extends TabActivity {
 		tabHost = this.getTabHost();
 		// 创建tab页
 		TabSpec tab1 = tabHost.newTabSpec(TAB_HOME).setIndicator(TAB_HOME);
-		tab1.setContent(new Intent(this, StartActivity.class));
+		tab1.setContent(new Intent(this, HomeActivity.class));
 		tabHost.addTab(tab1);
 		TabSpec tab3 = tabHost.newTabSpec(TAB_COLLECT).setIndicator(TAB_COLLECT);
 		tab3.setContent(new Intent(this, CollectActivity.class));

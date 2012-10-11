@@ -33,7 +33,7 @@
     <string name="home_title">美 ‧ 食</string>
     <string name="retry">重试</string>
     <string name="loading_message">正在获取数据，请稍候...</string>
-    <string name="percapita">人均:</string>
+    <string name="start_price">起送金额:</string>
     <string name="global_loading">正在获取数据，请稍候...</string>
     <string name="list_more_exception">出现未知错误,请稍后再试</string>
     <string name="list_timeout_text">,重试</string>

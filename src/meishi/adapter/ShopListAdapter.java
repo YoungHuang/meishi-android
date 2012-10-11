@@ -1,5 +1,6 @@
 package meishi.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import meishi.domain.Shop;
@@ -17,6 +18,10 @@ public class ShopListAdapter extends BaseAdapter {
 	private Context context;
 	private List<Shop> shopList;
 
+	public ShopListAdapter(Context context) {
+		this(context, new ArrayList<Shop>());
+	}
+	
 	public ShopListAdapter(Context context, List<Shop> shopList) {
 		this.context = context;
 		this.shopList = shopList;
@@ -43,10 +48,20 @@ public class ShopListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).inflate(R.layout.list_item_shop, null);
 			holder = new Holder();
+			holder.title = (TextView) convertView.findViewById(R.id.title);
+			holder.coupon = (ImageView) convertView.findViewById(R.id.coupon);
+			holder.ratingBar = (RatingBar) convertView.findViewById(R.id.ratingBar);
+			holder.startPrice = (TextView) convertView.findViewById(R.id.startPrice);
+			holder.commentCount = (TextView) convertView.findViewById(R.id.commentCount);
 			convertView.setTag(holder);
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
+		Shop shop = shopList.get(position);
+		holder.title.setText(shop.getName());
+		holder.ratingBar.setRating(shop.getRating());
+		holder.startPrice.setText(shop.getStartPrice().toString());
+		holder.commentCount.setText(shop.getCommentCount());
 
 		return convertView;
 	}
@@ -60,7 +75,7 @@ public class ShopListAdapter extends BaseAdapter {
 		TextView title;
 		ImageView coupon;
 		RatingBar ratingBar;
-		TextView averageExpense;
+		TextView startPrice;
 		TextView commentCount;
 	}
 }

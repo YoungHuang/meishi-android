@@ -4,8 +4,10 @@ import java.util.List;
 
 import meishi.MainApplication;
 import meishi.db.PreferenceService;
+import meishi.domain.Area;
 import meishi.domain.City;
 import meishi.domain.HotArea;
+import meishi.service.AreaService;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.HotAreaService;
 import meishi.utils.ResponseCode;
@@ -26,6 +28,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 	
 	private PreferenceService preferenceService;
 	private HotAreaService hotAreaService;
+	private AreaService areaService;
 	
 	private ArrayAdapter<HotArea> adapter;
 	private ProgressBar progressBar;
@@ -48,6 +51,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 		MainApplication application = (MainApplication) getApplicationContext();
 		hotAreaService = application.getHotAreaService();
 		preferenceService = application.getPreferenceService();
+		areaService = application.getAreaService();
 	}
 	
 	private void initHotAreaList() {
@@ -58,7 +62,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 		
 		hotAreaService.loadAll(city.getId(), new AsyncTaskCallBack<List<HotArea>>() {
 			@Override
-			public void refresh(List<HotArea> hotAreaList, ResponseCode code) {
+			public void onSuccess(List<HotArea> hotAreaList) {
 				progressBar.setVisibility(View.GONE);
 				hotAreaListView.setVisibility(View.VISIBLE);
 				HotArea moreArea = new HotArea();
@@ -67,6 +71,12 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 				adapter = new ArrayAdapter<HotArea>(HomeActivity.this, android.R.layout.simple_list_item_1, hotAreaList);
 				hotAreaListView.setAdapter(adapter);
 			}
+
+			@Override
+			public void onError(ResponseCode code) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 	}
 
@@ -74,7 +84,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 	public void onClick(View v) {
 		switch(v.getId()) {
 		case R.id.keywords:
-			Intent intent = new Intent(this, ShopSearchActivity2.class);
+			Intent intent = new Intent(this, SearchActivity.class);
 			this.startActivity(intent);
 			break;
 		}
@@ -83,11 +93,14 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		HotArea hotArea = adapter.getItem(position);
-		if (hotArea.getCity() == null) {
+		if (hotArea.getCityId() == null) {
 			Intent intent = new Intent(this, AreaListActivity.class);
 			this.startActivity(intent);
 		} else {
-			
+			Area area = areaService.findByName(hotArea.getName());
+			Intent intent = new Intent(this, ShopSearchActivity.class);
+			intent.putExtra("areaId", area.getId());
+			startActivity(intent);
 		}
 	}
 }

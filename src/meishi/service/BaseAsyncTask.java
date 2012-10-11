@@ -9,7 +9,12 @@ public abstract class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<
 	
 	@Override
 	protected void onPostExecute(Result result) {
-		if (callBack != null)
-			callBack.refresh(result, code);
+		if (callBack != null) {
+			if (code == ResponseCode.SUCCESS) {
+				callBack.onSuccess(result);
+			} else {
+				callBack.onError(code);
+			}
+		}
 	}
 }

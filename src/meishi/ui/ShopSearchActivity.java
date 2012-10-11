@@ -1,15 +1,13 @@
 package meishi.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import meishi.MainApplication;
 import meishi.adapter.ShopListAdapter;
-import meishi.domain.Area;
-import meishi.domain.District;
+import meishi.db.PreferenceService;
+import meishi.domain.City;
 import meishi.domain.Shop;
 import meishi.service.AsyncTaskCallBack;
-import meishi.service.DistrictService;
 import meishi.service.ShopService;
 import meishi.utils.ResponseCode;
 import android.app.Activity;
@@ -33,13 +31,16 @@ public class ShopSearchActivity extends Activity implements OnItemClickListener 
 	private static final int MAX_RESULT = 10;
 
 	private ShopService shopService;
-	private DistrictService districtService;
+	private PreferenceService preferenceService;
 
 	private ListView shopListView;
 	private View footerView;
+	private LinearLayout moreExceptionLayout;
 	private ShopListAdapter shopListAdapter;
-	private District district;
-	private Area area;
+	private Integer cityId;
+	private Integer districtId;
+	private Integer areaId;
+	private String keywords;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +48,17 @@ public class ShopSearchActivity extends Activity implements OnItemClickListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shop_search);
 
-		int districtId = getIntent().getIntExtra("districtId", -1);
-		if (districtId != -1) {
-			district = districtService.find(districtId);
+		int iDistrictId = getIntent().getIntExtra("districtId", -1);
+		if (iDistrictId != -1) {
+			districtId = iDistrictId;
 		}
+
+		int iAreaId = getIntent().getIntExtra("areaId", -1);
+		if (iAreaId != -1) {
+			areaId = iAreaId;
+		}
+
+		keywords = getIntent().getStringExtra("keywords");
 
 		initVariables();
 
@@ -60,35 +68,23 @@ public class ShopSearchActivity extends Activity implements OnItemClickListener 
 	private void initVariables() {
 		MainApplication application = (MainApplication) getApplicationContext();
 		shopService = application.getShopService();
-		districtService = application.getDistrictService();
+		preferenceService = application.getPreferenceService();
 	}
 
 	private void initShopList() {
-		shopListView = (ListView) this.findViewById(R.id.shopList);
+		City city = preferenceService.getCity();
+		cityId = city.getId();
 
-		final LinearLayout loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
-		final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		shopListView = (ListView) this.findViewById(R.id.shopList);
 
 		footerView = LayoutInflater.from(ShopSearchActivity.this).inflate(R.layout.list_item_more, null);
 		shopListView.addFooterView(footerView);
-		shopListAdapter = new ShopListAdapter(this, new ArrayList<Shop>());
+		shopListAdapter = new ShopListAdapter(this);
 		shopListView.setAdapter(shopListAdapter);
 
-		shopService.loadShopList(district.getCityId(), district.getId(), area.getId(), null, 0, MAX_RESULT,
-				new AsyncTaskCallBack<List<Shop>>() {
-					@Override
-					public void refresh(List<Shop> shopList, ResponseCode code) {
-						if (code != ResponseCode.SUCCESS) {
-							progressBar.setVisibility(View.GONE);
+		moreExceptionLayout = (LinearLayout) footerView.findViewById(R.id.more_exception_layout);
 
-							return;
-						}
-
-						loadingLayout.setVisibility(View.GONE);
-						shopListView.setVisibility(View.VISIBLE);
-						shopListAdapter.addMoreItems(shopList);
-					}
-				});
+		loadInitData();
 
 		shopListView.setOnItemClickListener(this);
 		shopListView.setOnScrollListener(new OnScrollListener() {
@@ -114,25 +110,54 @@ public class ShopSearchActivity extends Activity implements OnItemClickListener 
 		});
 	}
 
+	private void loadInitData() {
+		final LinearLayout loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
+		final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		final TextView loadingMessage = (TextView) findViewById(R.id.loadingMessage);
+		final TextView retryButton = (TextView) findViewById(R.id.retryButton);
+		
+		progressBar.setVisibility(View.VISIBLE);
+		
+		shopService.loadShopList(cityId, districtId, areaId, keywords, 0, MAX_RESULT,
+				new AsyncTaskCallBack<List<Shop>>() {
+					@Override
+					public void onSuccess(List<Shop> shopList) {
+						loadingLayout.setVisibility(View.GONE);
+						shopListView.setVisibility(View.VISIBLE);
+						shopListAdapter.addMoreItems(shopList);
+					}
+
+					@Override
+					public void onError(ResponseCode code) {
+						progressBar.setVisibility(View.GONE);
+						loadingMessage.setVisibility(View.GONE);
+						retryButton.setVisibility(View.VISIBLE);
+						loadInitData();
+					}
+				});
+	}
+
 	private void loadMoreData() {
 		final LinearLayout moreLoadLayout = (LinearLayout) footerView.findViewById(R.id.more_load_layout);
-		final LinearLayout moreExceptionLayout = (LinearLayout) footerView.findViewById(R.id.more_exception_layout);
 		
-		shopService.loadShopList(district.getCityId(), district.getId(), area.getId(), null,
-				shopListAdapter.getCount(), MAX_RESULT, new AsyncTaskCallBack<List<Shop>>() {
+		shopService.loadShopList(cityId, districtId, areaId, keywords, shopListAdapter.getCount(), MAX_RESULT,
+				new AsyncTaskCallBack<List<Shop>>() {
 					@Override
-					public void refresh(List<Shop> shops, ResponseCode code) {
-						if (shops != null && code == ResponseCode.SUCCESS) {
-							// No more items
+					public void onSuccess(List<Shop> shops) {
+						if (shops != null) {
 							shopListAdapter.addMoreItems(shops);
 							moreLoadLayout.setVisibility(View.VISIBLE);
 							moreExceptionLayout.setVisibility(View.GONE);
-						} else if (shops == null && code == ResponseCode.SUCCESS) {
-							shopListView.removeFooterView(footerView);
 						} else {
-							moreLoadLayout.setVisibility(View.GONE);
-							moreExceptionLayout.setVisibility(View.VISIBLE);
+							// No more items
+							shopListView.removeFooterView(footerView);
 						}
+					}
+
+					@Override
+					public void onError(ResponseCode code) {
+						moreLoadLayout.setVisibility(View.GONE);
+						moreExceptionLayout.setVisibility(View.VISIBLE);
 					}
 				});
 	}

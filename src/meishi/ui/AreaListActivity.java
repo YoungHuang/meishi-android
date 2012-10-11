@@ -1,5 +1,6 @@
 package meishi.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import meishi.MainApplication;
@@ -54,13 +55,35 @@ public class AreaListActivity extends Activity {
 	}
 	
 	private void initAreaList() {
+		ExpandableListView areaListView = (ExpandableListView) findViewById(R.id.areaList);
+		final TextView loadingMessage = (TextView) findViewById(R.id.loadingMessage);
+		final TextView retryButton = (TextView) findViewById(R.id.retryButton);
+		
+		adapter = new AreaExListViewAdapter();
+		areaListView.setAdapter(adapter);
+		
+		loadData();
+		
+		retryButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				loadingMessage.setVisibility(View.VISIBLE);
+				retryButton.setVisibility(View.GONE);
+				loadData();
+			}
+		});
+	}
+	
+	private void loadData() {
 		final ExpandableListView areaListView = (ExpandableListView) findViewById(R.id.areaList);
 		final LinearLayout loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
-		City city = preferenceService.getCity();
+		final TextView loadingMessage = (TextView) findViewById(R.id.loadingMessage);
+		final TextView retryButton = (TextView) findViewById(R.id.retryButton);
 		
+		City city = preferenceService.getCity();
 		districtService.loadAllByCityId(city.getId(), new AsyncTaskCallBack<List<District>>() {
 			@Override
-			public void refresh(List<District> districtList, ResponseCode code) {
+			public void onSuccess(List<District> districtList) {
 				if (districtList == null)
 					return;
 				
@@ -69,14 +92,24 @@ public class AreaListActivity extends Activity {
 				District district = new District();
 				district.setName("全部地区");
 				districtList.add(0, district);
-				adapter = new AreaExListViewAdapter(districtList);
-				areaListView.setAdapter(adapter);
+				adapter.addMoreItems(districtList);
 			}
+
+			@Override
+			public void onError(ResponseCode code) {
+				loadingMessage.setVisibility(View.GONE);
+				retryButton.setVisibility(View.VISIBLE);
+			}
+			
 		});
 	}
 	
 	class AreaExListViewAdapter extends BaseExpandableListAdapter {
 		List<District> districtList;
+		
+		public AreaExListViewAdapter() {
+			districtList = new ArrayList<District>();
+		}
 		
 		public AreaExListViewAdapter(List<District> districtList) {
 			this.districtList = districtList;
@@ -181,6 +214,11 @@ public class AreaListActivity extends Activity {
 		public boolean isChildSelectable(int groupPosition, int childPosition) {
 			return true;
 		}
+		
+		public void addMoreItems(List<District> districts) {
+			districtList.addAll(districts);
+			this.notifyDataSetChanged();
+		} 
 		
 		class GroupHolder {
 			TextView name;

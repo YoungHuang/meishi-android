@@ -14,6 +14,11 @@ public class AreaService extends DaoSupport<Area> {
 		Log.d(TAG, "createTable");
 	}
 	
+	public Area findByName(String name) {
+		// TODO
+		return null;
+	}
+	
 	public List<Area> findAllByDistrictId(Integer districtId) {
 		// TODO
 		return null;
@@ -22,5 +27,13 @@ public class AreaService extends DaoSupport<Area> {
 	public int getCountByDistrictId(Integer districtId) {
 		// TODO
 		return 0;
+	}
+	
+	public void saveList(List<Area> areaList) {
+		if (areaList != null) {
+			for (Area area : areaList) {
+				save(area);
+			}
+		}
 	}
 }

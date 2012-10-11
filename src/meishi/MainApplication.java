@@ -31,8 +31,8 @@ public class MainApplication extends Application {
 	
 	private void initVariables() {
 		cityService = new CityService();
-		districtService = new DistrictService();
 		areaService = new AreaService();
+		districtService = new DistrictService(areaService);
 		hotAreaService = new HotAreaService();
 		preferenceService = new PreferenceService(this, cityService);
 		shopService = new ShopService();

@@ -29,6 +29,8 @@ public class Shop {
 	private Double longitude;
 	/** 评价 **/
 	private float rating;
+	/** 评论数 **/
+	private Integer commentCount;
 	/** 电话 **/
 	private String phone;
 	/** 起送金额 **/
@@ -108,6 +110,14 @@ public class Shop {
 
 	public void setRating(float rating) {
 		this.rating = rating;
+	}
+	
+	public Integer getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
 	}
 	
 	public String getPhone() {

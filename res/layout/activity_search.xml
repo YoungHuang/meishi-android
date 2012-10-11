@@ -41,22 +41,11 @@
             android:textColor="#ff000000"
             android:textSize="16.0sp" />
     </LinearLayout>
-    <!-- 搜索结果列表 -->
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="1.0" >
-
-        <ListView
-            android:id="@+id/searchResults"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:cacheColorHint="#00000000"
-            android:divider="#ffc2c2c2"
-            android:dividerHeight="1.0dip"
-            android:visibility="gone" />
-
         <ListView
             android:id="@+id/searchHistory"
             android:layout_width="fill_parent"
