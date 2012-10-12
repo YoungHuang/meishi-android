@@ -2,6 +2,7 @@ package meishi.domain;
 
 public class City {
 	private Integer id;
+	private String name;
 
 	public Integer getId() {
 		return id;
@@ -10,8 +11,6 @@ public class City {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	private String name;
 
 	public String getName() {
 		return name;

@@ -93,7 +93,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		HotArea hotArea = adapter.getItem(position);
-		if (hotArea.getCityId() == null) {
+		if (hotArea.getCity() == null) {
 			Intent intent = new Intent(this, AreaListActivity.class);
 			this.startActivity(intent);
 		} else {

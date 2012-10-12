@@ -3,15 +3,7 @@ package meishi.domain;
 public class District {
 	private Integer id;
 	private String name;
-	private Integer cityId;
-
-	public Integer getCityId() {
-		return cityId;
-	}
-
-	public void setCityId(Integer cityId) {
-		this.cityId = cityId;
-	}
+	private City city;
 
 	public Integer getId() {
 		return id;
@@ -27,5 +19,13 @@ public class District {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
 	}
 }

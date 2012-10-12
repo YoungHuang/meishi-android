@@ -33,7 +33,7 @@ public class NetworkService {
 	
 	public static String enc = "UTF-8";
 	
-	public static final String hostUrl = "http://192.168.0.111:8080/meishi";
+	public static final String hostUrl = "http://10.60.4.66:8080/meishi";
 	public static final String shopLogoUrl = hostUrl + "/shop/logo/";
 	public static final String dishListUrl = hostUrl + "/dish/listByDishCategoryId";
 	public static final String submitOrderUrl = hostUrl + "/order/submit";

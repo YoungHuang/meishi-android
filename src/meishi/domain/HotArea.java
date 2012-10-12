@@ -2,7 +2,7 @@ package meishi.domain;
 
 public class HotArea {
 	private String name;
-	private Integer cityId;
+	private City city;
 
 	public String getName() {
 		return name;
@@ -11,13 +11,13 @@ public class HotArea {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Integer getCityId() {
-		return cityId;
+
+	public City getCity() {
+		return city;
 	}
 
-	public void setCityId(Integer cityId) {
-		this.cityId = cityId;
+	public void setCity(City city) {
+		this.city = city;
 	}
 
 	@Override
