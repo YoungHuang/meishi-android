@@ -1,6 +1,5 @@
 package meishi.ui;
 
-import meishi.db.DBManager;
 import meishi.network.NetworkService;
 import android.app.Activity;
 import android.content.Intent;
@@ -37,9 +36,9 @@ public class LogoActivity extends Activity {
 			
 			@Override
 			public void onAnimationEnd(Animation animation) {
-				Intent intent = new Intent(LogoActivity.this, MainActivity.class);
-				startActivity(intent);
-				finish();
+//				Intent intent = new Intent(LogoActivity.this, MainActivity.class);
+//				startActivity(intent);
+//				finish();
 			}
 		});
 		
@@ -48,8 +47,6 @@ public class LogoActivity extends Activity {
 
 	private void init() {
 		Log.d(TAG, "init");
-		
-		DBManager.open(this.getApplicationContext());
 		
 		// 启动MainService
 		Intent mainService = new Intent("meishi.service.MainService");

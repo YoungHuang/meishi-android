@@ -1,15 +1,13 @@
 package meishi.service;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import meishi.db.base.DaoSupport;
+import java.sql.SQLException;
+
+import meishi.db.DaoSupport;
 import meishi.domain.City;
 
-public class CityService extends DaoSupport<City> {
-	private static final String TAG = "CityService";
-
-	public static void onCreate(SQLiteDatabase db) {
-		Log.d(TAG, "createTable");
+public class CityService extends DaoSupport<City, Integer> {
+	public CityService() throws SQLException {
+		super(City.class);
 	}
 	
 	public City findByName(String name) {

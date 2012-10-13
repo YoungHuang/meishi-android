@@ -1,7 +1,9 @@
 package meishi;
 
+import java.sql.SQLException;
+
+import meishi.db.DatabaseHelper;
 import meishi.db.PreferenceService;
-import meishi.db.base.SQLiteHelper;
 import meishi.service.AreaService;
 import meishi.service.CityService;
 import meishi.service.DistrictService;
@@ -25,17 +27,27 @@ public class MainApplication extends Application {
 		initVariables();
 	}
 
+	@Override
+	public void onTerminate() {
+		super.onTerminate();
+		DatabaseHelper.getHelper().close();
+	}
+
 	private void initDB() {
-		SQLiteHelper.setContext(this);
+		DatabaseHelper.setContext(this);
 	}
 	
 	private void initVariables() {
-		cityService = new CityService();
-		areaService = new AreaService();
-		districtService = new DistrictService(areaService);
-		hotAreaService = new HotAreaService();
-		preferenceService = new PreferenceService(this, cityService);
-		shopService = new ShopService();
+		try {
+			cityService = new CityService();
+			areaService = new AreaService();
+			districtService = new DistrictService(areaService);
+			hotAreaService = new HotAreaService();
+			preferenceService = new PreferenceService(this, cityService);
+			shopService = new ShopService();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public PreferenceService getPreferenceService() {

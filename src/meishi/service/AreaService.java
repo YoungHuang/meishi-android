@@ -1,17 +1,15 @@
 package meishi.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import meishi.db.base.DaoSupport;
+import meishi.db.DaoSupport;
 import meishi.domain.Area;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class AreaService extends DaoSupport<Area> {
-	private static final String TAG = "AreaService";
-
-	public static void onCreate(SQLiteDatabase db) {
-		Log.d(TAG, "createTable");
+public class AreaService extends DaoSupport<Area, Integer> {
+	public AreaService() throws SQLException {
+		super(Area.class);
 	}
 	
 	public Area findByName(String name) {
@@ -32,7 +30,11 @@ public class AreaService extends DaoSupport<Area> {
 	public void saveList(List<Area> areaList) {
 		if (areaList != null) {
 			for (Area area : areaList) {
-				save(area);
+				try {
+					create(area);
+				} catch (SQLException e) {
+					Log.e(TAG, "saveList() exception", e);
+				}
 			}
 		}
 	}

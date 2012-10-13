@@ -2,40 +2,50 @@ package meishi.domain;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.util.Log;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * 餐厅
  * @author yhuang
  *
  */
+@DatabaseTable
 public class Shop {
-	private static final String TAG = "Shop";
-	
+	@DatabaseField(id = true)
 	private Integer id;
 	/** 餐厅名 **/
+	@DatabaseField
 	private String name;
 	/** 地址 **/
+	@DatabaseField
 	private String province;
+	@DatabaseField
 	private String city;
+	@DatabaseField
 	private String district;
+	@DatabaseField
 	private String road;
 	/** 纬度 **/
+	@DatabaseField
 	private Double latitude;
 	/** 经度 **/
+	@DatabaseField
 	private Double longitude;
 	/** 评价 **/
+	@DatabaseField
 	private float rating;
 	/** 评论数 **/
+	@DatabaseField
 	private Integer commentCount;
 	/** 电话 **/
+	@DatabaseField
 	private String phone;
 	/** 起送金额 **/
+	@DatabaseField
 	private Double startPrice;
 	/** 简介 **/
+	@DatabaseField
 	private String description;
 	/** 菜单目录列表 **/
 	private List<DishCategory> dishCategories;
@@ -150,38 +160,5 @@ public class Shop {
 
 	public void setDishCategories(List<DishCategory> dishCategories) {
 		this.dishCategories = dishCategories;
-	}
-
-	public String beanToString() {
-		JSONObject object = new JSONObject();
-		try {
-			object.put("shopid", id)
-				.put("name", name)
-				.put("rating", rating)
-				.put("phone", phone)
-				.put("startPrice", startPrice);
-//				.put("address", address.beanToString());
-		} catch (JSONException e) {
-			Log.d(TAG, "beanToString() exception", e);
-		}
-		
-		return object.toString();
-	}
-	
-	public void stringToBean(String str) {
-		try {
-			JSONObject object = new JSONObject(str);
-			id = object.getInt("id");
-			name = object.getString("name");
-			rating = (float) object.getDouble("rating");
-			phone = object.getString("phone");
-			startPrice = object.getDouble("startPrice");
-//			address = new Address();
-//			address.setCity(object.getString("city"));
-//			address.stringToBean(object.getString("address"));
-			
-		} catch (JSONException e) {
-			Log.d(TAG, "stringToBean() exception", e);
-		}
 	}
 }

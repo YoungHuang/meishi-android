@@ -1,25 +1,29 @@
 package meishi.domain;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
-import android.util.Log;
 
 /**
  * 菜单
  * @author yonghuang
  *
  */
+@DatabaseTable
 public class Dish {
-	private static final String TAG = "Dish";
-	
+	@DatabaseField(id = true)
 	private Integer id;
 	/** 菜名 **/
+	@DatabaseField
 	private String name;
 	/** 价格 **/
+	@DatabaseField
 	private Double price;
 	/** 描述 **/
+	@DatabaseField
 	private String description;
+	@DatabaseField(foreign = true)
+	private DishCategory dishCategory;
 	
 	public Dish() {
 		
@@ -63,15 +67,12 @@ public class Dish {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public void stringToBean(String str) {
-		try {
-			JSONObject object = new JSONObject(str);
-			id = object.getInt("id");
-			name = object.getString("name");
-			price = object.getDouble("price");
-		} catch (JSONException e) {
-			Log.d(TAG, "stringToBean() exception", e);
-		}
+
+	public DishCategory getDishCategory() {
+		return dishCategory;
+	}
+
+	public void setDishCategory(DishCategory dishCategory) {
+		this.dishCategory = dishCategory;
 	}
 }

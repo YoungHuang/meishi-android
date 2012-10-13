@@ -6,7 +6,6 @@ import meishi.domain.Dish;
 import meishi.domain.Order;
 import meishi.domain.OrderItem;
 import meishi.domain.Shop;
-import meishi.service.GetDishListFromNetTask;
 import meishi.service.MainService;
 import meishi.service.RefreshCallBack;
 import meishi.service.Task;
@@ -71,17 +70,17 @@ public class DishActivity extends Activity implements OnClickListener, OnItemCli
 	// 显示菜单列表
 	private void initDishList() {
 		gridView = (GridView) this.findViewById(R.id.gridView);
-		Task task = new GetDishListFromNetTask(dishCategoryId, 0, MAX_RESULT, new RefreshCallBack() {
-			@Override
-			public void refresh(Object... params) {
-				List<Dish> dishList = (List<Dish>) params[0];
-				gridViewAdapter = new GridViewAdapter(DishActivity.this, dishList);
-				gridView.setAdapter(gridViewAdapter);
-				
-				gridView.setOnItemClickListener(DishActivity.this);
-			}
-		});
-		MainService.newTask(task);
+//		Task task = new GetDishListFromNetTask(dishCategoryId, 0, MAX_RESULT, new RefreshCallBack() {
+//			@Override
+//			public void refresh(Object... params) {
+//				List<Dish> dishList = (List<Dish>) params[0];
+//				gridViewAdapter = new GridViewAdapter(DishActivity.this, dishList);
+//				gridView.setAdapter(gridViewAdapter);
+//				
+//				gridView.setOnItemClickListener(DishActivity.this);
+//			}
+//		});
+//		MainService.newTask(task);
 	}
 	
 	@Override
@@ -105,18 +104,18 @@ public class DishActivity extends Activity implements OnClickListener, OnItemCli
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		if (id == -1) {// 更多
-			Task task = new GetDishListFromNetTask(dishCategoryId, gridViewAdapter.getCount() - 1, MAX_RESULT, new RefreshCallBack() {
-				@Override
-				public void refresh(Object... params) {
-					List<Dish> dishList = (List<Dish>) params[0];
-					gridViewAdapter.addMoreItems(dishList);
-				}
-			});
-			MainService.newTask(task);
-		} else {// 显示菜单详情
-			
-		}
+//		if (id == -1) {// 更多
+//			Task task = new GetDishListFromNetTask(dishCategoryId, gridViewAdapter.getCount() - 1, MAX_RESULT, new RefreshCallBack() {
+//				@Override
+//				public void refresh(Object... params) {
+//					List<Dish> dishList = (List<Dish>) params[0];
+//					gridViewAdapter.addMoreItems(dishList);
+//				}
+//			});
+//			MainService.newTask(task);
+//		} else {// 显示菜单详情
+//			
+//		}
 	}
 	
 	class GridViewAdapter extends BaseAdapter {

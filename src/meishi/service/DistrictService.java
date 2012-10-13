@@ -1,11 +1,12 @@
 package meishi.service;
 
 import java.lang.reflect.Type;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import meishi.db.base.DaoSupport;
+import meishi.db.DaoSupport;
 import meishi.domain.Area;
 import meishi.domain.District;
 import meishi.network.NetworkService;
@@ -15,15 +16,14 @@ import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 
-public class DistrictService extends DaoSupport<District> {
-	private static final String TAG = "AreaService";
-	
+public class DistrictService extends DaoSupport<District, Integer> {
 	private static final String districtUrl = NetworkService.hostUrl + "/district/list";
 	private static final String areaUrl = NetworkService.hostUrl + "/area/list";
 	
 	private AreaService areaService;
 
-	public DistrictService(AreaService areaService) {
+	public DistrictService(AreaService areaService) throws SQLException {
+		super(District.class);
 		this.areaService = areaService;
 	}
 	
@@ -39,7 +39,11 @@ public class DistrictService extends DaoSupport<District> {
 	public void saveList(List<District> districtList) {
 		if (districtList != null) {
 			for (District district : districtList) {
-				save(district);
+				try {
+					create(district);
+				} catch (SQLException e) {
+					Log.e(TAG, "saveList() exception", e);
+				}
 			}
 		}
 	}

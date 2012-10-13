@@ -1,38 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-
-    <classpathentry
-        kind="src"
-        path="src" />
-
-    <classpathentry
-        kind="src"
-        path="gen" />
-
-    <classpathentry
-        kind="con"
-        path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK" />
-
-    <classpathentry
-        exported="true"
-        kind="con"
-        path="com.android.ide.eclipse.adt.LIBRARIES" />
-
-    <classpathentry
-        kind="lib"
-        path="libs/gson-2.2.jar" />
-
-    <classpathentry
-        kind="lib"
-        path="libs/spring-android-core-1.0.0.RELEASE.jar" />
-
-    <classpathentry
-        kind="lib"
-        path="libs/spring-android-rest-template-1.0.0.RELEASE.jar"
-        sourcepath="C:/opensource/mobile/springmobile/spring-android-1.0.0.RELEASE/libs/spring-android-rest-template-1.0.0.RELEASE-sources.jar" />
-
-    <classpathentry
-        kind="output"
-        path="bin/classes" />
-
+	<classpathentry exported="true" kind="lib" path="libs/ormlite-android-4.41.jar" sourcepath="E:/project/ClickCounter/ormlite-android-4.41-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/ormlite-core-4.41.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="lib" path="libs/gson-2.2.jar"/>
+	<classpathentry kind="lib" path="libs/spring-android-core-1.0.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libs/spring-android-rest-template-1.0.0.RELEASE.jar" sourcepath="C:/opensource/mobile/springmobile/spring-android-1.0.0.RELEASE/libs/spring-android-rest-template-1.0.0.RELEASE-sources.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

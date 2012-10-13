@@ -1,8 +1,15 @@
 package meishi.domain;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable
 public class District {
+	@DatabaseField(id = true)
 	private Integer id;
+	@DatabaseField
 	private String name;
+	@DatabaseField(foreign = true)
 	private City city;
 
 	public Integer getId() {

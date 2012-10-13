@@ -1,19 +1,13 @@
 package meishi.ui;
 
-import meishi.db.SearchHistoryDao;
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 public class SearchActivity extends Activity implements View.OnClickListener {
 	private static final String TAG = "SearchActivity";
@@ -42,20 +36,20 @@ public class SearchActivity extends Activity implements View.OnClickListener {
 	
 	private void init() {
 		// 搜索关键字历史列表
-		Cursor cursor = SearchHistoryDao.getAllSearchHistoryCursor();
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.shop_search_keywords, cursor,
-					new String[]{"keywords"}, new int[]{R.id.keywords});
-		historyListView.setAdapter(adapter);
-		historyListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				keywords = ((TextView) view.findViewById(R.id.keywords)).getText().toString();
-				search();
-			}
-			
-		});
+//		Cursor cursor = SearchHistoryDao.getAllSearchHistoryCursor();
+//		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.shop_search_keywords, cursor,
+//					new String[]{"keywords"}, new int[]{R.id.keywords});
+//		historyListView.setAdapter(adapter);
+//		historyListView.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				keywords = ((TextView) view.findViewById(R.id.keywords)).getText().toString();
+//				search();
+//			}
+//			
+//		});
 	}
 	
 	@Override
@@ -63,12 +57,12 @@ public class SearchActivity extends Activity implements View.OnClickListener {
 		switch(v.getId()) {
 		case R.id.search:
 			keywords = keywordsEditText.getText().toString();
-			SearchHistoryDao.saveSearchHistory(keywords);
+//			SearchHistoryDao.saveSearchHistory(keywords);
 			search();
 			break;
 			
 		case R.id.clear:
-			SearchHistoryDao.clearAllSearchHistory();
+//			SearchHistoryDao.clearAllSearchHistory();
 			break;
 		}
 	}
