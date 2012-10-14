@@ -7,7 +7,5 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="lib" path="libs/gson-2.2.jar"/>
-	<classpathentry kind="lib" path="libs/spring-android-core-1.0.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="libs/spring-android-rest-template-1.0.0.RELEASE.jar" sourcepath="C:/opensource/mobile/springmobile/spring-android-1.0.0.RELEASE/libs/spring-android-rest-template-1.0.0.RELEASE-sources.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -10,9 +10,6 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
@@ -23,13 +20,6 @@ import com.google.gson.Gson;
 
 public class NetworkService {
 	private static final String TAG = "NetworkService";
-	
-	private static RestTemplate restTemplate;
-	
-	static {
-		restTemplate = new RestTemplate();
-		restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
-	}
 	
 	public static String enc = "UTF-8";
 	
@@ -72,16 +62,26 @@ public class NetworkService {
 	
 	/**
 	 * 发送GET请求
+	 * @throws Exception 
 	 */
-	public static <T> T getForObject(String url, Class<T> responseType, Map<String, ?> urlVariables) {
-		return restTemplate.getForObject(url, responseType, urlVariables);
+	public static <T> T getForObject(String url, Class<T> responseType, Map<String, String> urlVariables) throws Exception {
+		Gson gson = new Gson();
+		byte[] data = sendGetRequest(url, urlVariables);
+		String json = new String(data, enc);
+		T t = gson.fromJson(json, responseType);
+		return t;
 	}
 	
 	/**
 	 * 发送POST请求
+	 * @throws Exception 
 	 */
-	public static <T> T postForObject(String url, Object request, Class<T> responseType) {
-		return restTemplate.postForObject(url, request, responseType);
+	public static <T> T postForObject(String url, Object request, Class<T> responseType) throws Exception {
+		Gson gson = new Gson();
+		byte[] data = sendPostRequest(url, gson.toJson(request), enc);
+		String json = new String(data, enc);
+		T t = gson.fromJson(json, responseType);
+		return t;
 	}
 	
 	public static <T> List<T> getForList(String url, Type type, Map<String, String> urlVariables) throws Exception {
