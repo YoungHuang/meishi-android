@@ -40,12 +40,6 @@
         <activity
             android:name=".ShopSearchActivity2"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <service android:name="meishi.service.MainService" >
-            <intent-filter>
-                <action android:name="meishi.service.MainService" />
-            </intent-filter>
-        </service>
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

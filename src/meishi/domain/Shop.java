@@ -47,8 +47,6 @@ public class Shop {
 	/** 简介 **/
 	@DatabaseField
 	private String description;
-	/** 菜单目录列表 **/
-	private List<DishCategory> dishCategories;
 
 	public Integer getId() {
 		return id;
@@ -152,13 +150,5 @@ public class Shop {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public List<DishCategory> getDishCategories() {
-		return dishCategories;
-	}
-
-	public void setDishCategories(List<DishCategory> dishCategories) {
-		this.dishCategories = dishCategories;
 	}
 }

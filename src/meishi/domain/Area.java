@@ -9,7 +9,7 @@ public class Area {
 	private Integer id;
 	@DatabaseField
 	private String name;
-	@DatabaseField(foreign = true)
+	@DatabaseField(foreign = true, index = true)
 	private District district;
 
 	public Integer getId() {

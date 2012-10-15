@@ -14,8 +14,6 @@ import meishi.utils.ResponseCode;
 import com.google.gson.reflect.TypeToken;
 
 public class ShopService extends DaoSupport<Shop, Integer> {
-	private static final String TAG = "ShopService";
-	
 	private static final String url = NetworkService.hostUrl + "/shop/list";
 
 	public ShopService() throws SQLException {

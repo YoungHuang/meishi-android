@@ -1,5 +1,6 @@
 package meishi.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import meishi.MainApplication;
@@ -15,35 +16,42 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class HomeActivity extends Activity implements View.OnClickListener, OnItemClickListener {
 	private static final String TAG = "HomeActivity";
-	
+
 	private PreferenceService preferenceService;
 	private HotAreaService hotAreaService;
 	private AreaService areaService;
+
+	private HotAreaAdapter adapter;
+	private ListView hotAreaListView;
 	
-	private ArrayAdapter<HotArea> adapter;
-	private ProgressBar progressBar;
-	
+	private City city;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_activity);
-		
+
 		initVariables();
-		
+
 		EditText keywords = (EditText) this.findViewById(R.id.keywords);
 		keywords.setOnClickListener(this);
-		
+
 		initHotAreaList();
 	}
 
@@ -52,47 +60,72 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 		hotAreaService = application.getHotAreaService();
 		preferenceService = application.getPreferenceService();
 		areaService = application.getAreaService();
+		
+		city = preferenceService.getCity();
 	}
-	
+
 	private void initHotAreaList() {
-		final ListView hotAreaListView = (ListView) findViewById(R.id.hotAreaList);
-		progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		hotAreaListView = (ListView) findViewById(R.id.hotAreaList);
+		adapter = new HotAreaAdapter();
+		hotAreaListView.setAdapter(adapter);
 		hotAreaListView.setOnItemClickListener(this);
-		City city = preferenceService.getCity();
+
+		loadInitData();
+		
+		final TextView loadingMessage = (TextView) findViewById(R.id.loadingMessage);
+		final TextView retryButton = (TextView) findViewById(R.id.retryButton);
+		
+		retryButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				loadingMessage.setVisibility(View.VISIBLE);
+				retryButton.setVisibility(View.GONE);
+				loadInitData();
+			}
+		});
+	}
+
+	private void loadInitData() {
+		final LinearLayout loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
+		final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		final TextView loadingMessage = (TextView) findViewById(R.id.loadingMessage);
+		final TextView retryButton = (TextView) findViewById(R.id.retryButton);
+		progressBar.setVisibility(View.VISIBLE);
 		
 		hotAreaService.loadAll(city.getId(), new AsyncTaskCallBack<List<HotArea>>() {
 			@Override
 			public void onSuccess(List<HotArea> hotAreaList) {
-				progressBar.setVisibility(View.GONE);
+				loadingLayout.setVisibility(View.GONE);
 				hotAreaListView.setVisibility(View.VISIBLE);
 				HotArea moreArea = new HotArea();
 				moreArea.setName("more areas");
 				hotAreaList.add(moreArea);
-				adapter = new ArrayAdapter<HotArea>(HomeActivity.this, android.R.layout.simple_list_item_1, hotAreaList);
-				hotAreaListView.setAdapter(adapter);
+				
+				adapter.addMoreItems(hotAreaList);
 			}
 
 			@Override
 			public void onError(ResponseCode code) {
-				// TODO Auto-generated method stub
-				
+				progressBar.setVisibility(View.GONE);
+				loadingMessage.setVisibility(View.GONE);
+				retryButton.setVisibility(View.VISIBLE);
 			}
 		});
 	}
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()) {
+		switch (v.getId()) {
 		case R.id.keywords:
 			Intent intent = new Intent(this, SearchActivity.class);
 			this.startActivity(intent);
 			break;
 		}
 	}
-	
+
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		HotArea hotArea = adapter.getItem(position);
+		HotArea hotArea = (HotArea) adapter.getItem(position);
 		if (hotArea.getCity() == null) {
 			Intent intent = new Intent(this, AreaListActivity.class);
 			this.startActivity(intent);
@@ -101,6 +134,56 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 			Intent intent = new Intent(this, ShopSearchActivity.class);
 			intent.putExtra("areaId", area.getId());
 			startActivity(intent);
+		}
+	}
+
+	private class HotAreaAdapter extends BaseAdapter {
+		List<HotArea> hotAreaList;
+
+		public HotAreaAdapter() {
+			hotAreaList = new ArrayList<HotArea>();
+		}
+		
+		@Override
+		public int getCount() {
+			return hotAreaList.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return hotAreaList.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			Holder holder;
+			if (convertView == null) {
+				// TODO
+				convertView = LayoutInflater.from(HomeActivity.this).inflate(R.layout.list_item_hot_area, null);
+				holder = new Holder();
+				holder.name = (TextView) convertView.findViewById(R.id.name);
+				convertView.setTag(holder);
+			} else {
+				holder = (Holder) convertView.getTag();
+			}
+			HotArea hotArea = hotAreaList.get(position);
+			holder.name.setText(hotArea.getName());
+
+			return convertView;
+		}
+
+		public void addMoreItems(List<HotArea> hotAreas) {
+			hotAreaList.addAll(hotAreas);
+			this.notifyDataSetChanged();
+		}
+
+		private class Holder {
+			TextView name;
 		}
 	}
 }

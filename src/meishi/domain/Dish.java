@@ -22,7 +22,7 @@ public class Dish {
 	/** 描述 **/
 	@DatabaseField
 	private String description;
-	@DatabaseField(foreign = true)
+	@DatabaseField(foreign = true, index = true)
 	private DishCategory dishCategory;
 	
 	public Dish() {

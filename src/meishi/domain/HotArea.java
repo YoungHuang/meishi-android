@@ -9,7 +9,7 @@ public class HotArea {
 	private Integer id;
 	@DatabaseField
 	private String name;
-	@DatabaseField(foreign = true)
+	@DatabaseField(foreign = true, index = true)
 	private City city;
 
 	public Integer getId() {

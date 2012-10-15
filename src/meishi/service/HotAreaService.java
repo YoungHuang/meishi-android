@@ -34,8 +34,7 @@ public class HotAreaService extends DaoSupport<HotArea, Integer> {
 				try {
 					create(hotArea);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Log.e(TAG, "saveList() exception", e);
 				}
 			}
 		}
@@ -46,7 +45,7 @@ public class HotAreaService extends DaoSupport<HotArea, Integer> {
 		try {
 			hotAreaList = findAllByCityId(cityId);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			Log.e(TAG, "loadAll() exception", e);
 		}
 
 		if (hotAreaList == null) {

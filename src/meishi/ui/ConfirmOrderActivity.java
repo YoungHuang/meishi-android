@@ -5,10 +5,6 @@ import java.util.List;
 import meishi.domain.Dish;
 import meishi.domain.Order;
 import meishi.domain.OrderItem;
-import meishi.service.MainService;
-import meishi.service.RefreshCallBack;
-import meishi.service.SubmitOrderTask;
-import meishi.service.Task;
 import meishi.utils.GlobalData;
 import android.app.Activity;
 import android.content.Context;
@@ -23,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * 订单确认
@@ -76,14 +71,14 @@ public class ConfirmOrderActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.next: // 下一步
 			order.setDescription(noteText.getText().toString());
-			Task task = new SubmitOrderTask(new RefreshCallBack() {
-				@Override
-				public void refresh(Object... params) {
-					String result = (String) params[0];
-					Toast.makeText(ConfirmOrderActivity.this, result, Toast.LENGTH_LONG).show();
-				}
-			});
-			MainService.newTask(task);
+//			Task task = new SubmitOrderTask(new RefreshCallBack() {
+//				@Override
+//				public void refresh(Object... params) {
+//					String result = (String) params[0];
+//					Toast.makeText(ConfirmOrderActivity.this, result, Toast.LENGTH_LONG).show();
+//				}
+//			});
+//			MainService.newTask(task);
 			break;
 		case R.id.plus: // 增加人数
 			people++;

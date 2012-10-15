@@ -17,13 +17,10 @@ public class DishCategory {
 	/** 菜单类别名 **/
 	@DatabaseField
 	private String name;
-	/** 菜单列表 **/
-	@DatabaseField
-	private List<Dish> dishList;
 	/** 菜品数量 **/
 	@DatabaseField
 	private int count;
-	@DatabaseField(foreign = true)
+	@DatabaseField(foreign = true, index = true)
 	private Shop shop;
 	
 	public Integer getId() {
@@ -40,14 +37,6 @@ public class DishCategory {
 	
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<Dish> getDishList() {
-		return dishList;
-	}
-
-	public void setDishList(List<Dish> dishList) {
-		this.dishList = dishList;
 	}
 
 	public int getCount() {
