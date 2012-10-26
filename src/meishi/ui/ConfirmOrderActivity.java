@@ -1,11 +1,16 @@
 package meishi.ui;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import meishi.MainApplication;
 import meishi.domain.Dish;
 import meishi.domain.Order;
 import meishi.domain.OrderItem;
+import meishi.service.AsyncTaskCallBack;
+import meishi.service.OrderService;
 import meishi.utils.GlobalData;
+import meishi.utils.ResponseCode;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 订单确认
@@ -27,6 +33,8 @@ import android.widget.TextView;
  */
 public class ConfirmOrderActivity extends Activity implements OnClickListener {
 	private static final String TAG = "ConfirmOrderActivity";
+	
+	private OrderService orderService;
 	
 	private Order order;
 	private TextView totalAmountView;
@@ -38,6 +46,8 @@ public class ConfirmOrderActivity extends Activity implements OnClickListener {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.confirm_order_activity);
+		
+		initVariables();
 		
 		order = GlobalData.order;
 		totalAmountView = (TextView) this.findViewById(R.id.totalAmount);
@@ -57,8 +67,13 @@ public class ConfirmOrderActivity extends Activity implements OnClickListener {
 		minus.setOnClickListener(this);
 		
 		ListView listView = (ListView) this.findViewById(R.id.order_list);
-		ListAdapter listAdapter = new ListAdapter(this, order.getOrderDishList());
+		ListAdapter listAdapter = new ListAdapter(this, order.getOrderItemList());
 		listView.setAdapter(listAdapter);
+	}
+	
+	private void initVariables() {
+		MainApplication application = (MainApplication) getApplicationContext();
+		orderService = application.getOrderService();
 	}
 	
 	@Override
@@ -71,6 +86,23 @@ public class ConfirmOrderActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.next: // 下一步
 			order.setDescription(noteText.getText().toString());
+			try {
+				orderService.create(order);
+			} catch (SQLException e) {
+				Log.e(TAG, "database error", e);
+				return;
+			}
+			orderService.submitOrder(order, new AsyncTaskCallBack<Void>() {
+				@Override
+				public void onSuccess(Void t) {
+					Toast.makeText(ConfirmOrderActivity.this, "submit order success", Toast.LENGTH_LONG).show();
+				}
+
+				@Override
+				public void onError(ResponseCode code) {
+					Toast.makeText(ConfirmOrderActivity.this, "submit order error", Toast.LENGTH_LONG).show();
+				}
+			});
 //			Task task = new SubmitOrderTask(new RefreshCallBack() {
 //				@Override
 //				public void refresh(Object... params) {

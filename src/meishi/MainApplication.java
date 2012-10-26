@@ -6,8 +6,10 @@ import meishi.db.DatabaseHelper;
 import meishi.db.PreferenceService;
 import meishi.service.AreaService;
 import meishi.service.CityService;
+import meishi.service.DishCategoryService;
 import meishi.service.DistrictService;
 import meishi.service.HotAreaService;
+import meishi.service.OrderService;
 import meishi.service.ShopService;
 import android.app.Application;
 
@@ -18,6 +20,8 @@ public class MainApplication extends Application {
 	private AreaService areaService;
 	private HotAreaService hotAreaService;
 	private ShopService shopService;
+	private OrderService orderService;
+	private DishCategoryService dishCategoryService;
 
 	@Override
 	public void onCreate() {
@@ -45,6 +49,8 @@ public class MainApplication extends Application {
 			hotAreaService = new HotAreaService();
 			preferenceService = new PreferenceService(this, cityService);
 			shopService = new ShopService();
+			orderService = new OrderService();
+			dishCategoryService = new DishCategoryService();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -72,5 +78,13 @@ public class MainApplication extends Application {
 	
 	public ShopService getShopService() {
 		return shopService;
+	}
+	
+	public OrderService getOrderService() {
+		return orderService;
+	}
+	
+	public DishCategoryService getDishCategoryService() {
+		return dishCategoryService;
 	}
 }

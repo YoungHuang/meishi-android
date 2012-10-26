@@ -16,8 +16,6 @@ import android.util.Log;
 import com.google.gson.reflect.TypeToken;
 
 public class HotAreaService extends DaoSupport<HotArea, Integer> {
-	private static final String TAG = "HotAreaService";
-	
 	private static final String url = NetworkService.hostUrl + "/hotArea/list";
 
 	public HotAreaService() throws SQLException {

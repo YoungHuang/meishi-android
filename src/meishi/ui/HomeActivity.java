@@ -163,7 +163,6 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Holder holder;
 			if (convertView == null) {
-				// TODO
 				convertView = LayoutInflater.from(HomeActivity.this).inflate(R.layout.list_item_hot_area, null);
 				holder = new Holder();
 				holder.name = (TextView) convertView.findViewById(R.id.name);

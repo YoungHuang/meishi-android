@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 public abstract class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 	protected AsyncTaskCallBack<Result> callBack;
-	protected ResponseCode code;
+	protected ResponseCode code = ResponseCode.SUCCESS;
 	
 	@Override
 	protected void onPostExecute(Result result) {

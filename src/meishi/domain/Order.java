@@ -15,7 +15,8 @@ import android.util.Log;
  *
  */
 public class Order {
-	private static final String TAG = "Order";
+	public final static Integer STATUS_NEW = 0;
+	public final static Integer STATUS_CONFIRM = 1;
 	
 	private Integer id;
 	private Shop shop;
@@ -23,23 +24,24 @@ public class Order {
 	private Integer totalCount = 0;
 	private Integer people = 0;
 	private String description;
-	private List<OrderItem> orderDishList = new ArrayList<OrderItem>();
+	private Integer status = STATUS_NEW;
+	private List<OrderItem> orderItemList = new ArrayList<OrderItem>();
 
-	public OrderItem findOrderDish(Integer dishId) {
-		for (OrderItem orderDish : orderDishList) {
-			if (orderDish.getDish().getId().equals(dishId))
-				return orderDish;
+	public OrderItem findOrderItem(Integer dishId) {
+		for (OrderItem orderItem : orderItemList) {
+			if (orderItem.getDish().getId().equals(dishId))
+				return orderItem;
 		}
 		
 		return null;
 	}
 
-	public void addOrderDish(OrderItem orderDish) {
-		orderDishList.add(orderDish);
+	public void addOrderItem(OrderItem orderItem) {
+		orderItemList.add(orderItem);
 	}
 	
-	public void deleteOrderDish(OrderItem orderDish) {
-		orderDishList.remove(orderDish);
+	public void deleteOrderItem(OrderItem orderItem) {
+		orderItemList.remove(orderItem);
 	}
 	
 	public Integer getId() {
@@ -81,13 +83,21 @@ public class Order {
 	public void setPeople(Integer people) {
 		this.people = people;
 	}
-
-	public List<OrderItem> getOrderDishList() {
-		return orderDishList;
+	
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setOrderDishList(List<OrderItem> orderDishList) {
-		this.orderDishList = orderDishList;
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public List<OrderItem> getOrderItemList() {
+		return orderItemList;
+	}
+
+	public void setOrderItemList(List<OrderItem> orderItemList) {
+		this.orderItemList = orderItemList;
 	}
 
 	public String getDescription() {
@@ -96,24 +106,5 @@ public class Order {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	
-	public String beanToString() {
-		JSONObject object = new JSONObject();
-		try {
-			object.put("people", people);
-			JSONArray jsonarray = new JSONArray();
-			for (OrderItem orderDish : orderDishList) {
-				JSONObject obj = new JSONObject();
-				obj.put("id", orderDish.getDish().getId());
-				obj.put("count", orderDish.getCount());
-				jsonarray.put(obj);
-			}
-			object.put("orderItemList", jsonarray);
-		} catch (JSONException e) {
-			Log.d(TAG, "beanToString() exception", e);
-		}
-		
-		return object.toString();
 	}
 }

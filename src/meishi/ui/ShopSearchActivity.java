@@ -11,6 +11,7 @@ import meishi.service.AsyncTaskCallBack;
 import meishi.service.ShopService;
 import meishi.utils.ResponseCode;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -164,6 +165,8 @@ public class ShopSearchActivity extends Activity implements OnItemClickListener 
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+		ShopDetailActivity.shop = (Shop) shopListAdapter.getItem(position);
+		Intent intent = new Intent(this, ShopDetailActivity.class);
+		startActivity(intent);
 	}
 }

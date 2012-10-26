@@ -41,17 +41,12 @@ public class DishActivity extends Activity implements OnClickListener, OnItemCli
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.dish_activity);
 		
-		// 商铺名称
 		TextView title = (TextView) this.findViewById(R.id.title);
 		title.setText(shop.getName());
 		
-		// 已点
 		totalView = (TextView) this.findViewById(R.id.total);
-		// 菜单目录选择
 		Button selectButton = (Button) this.findViewById(R.id.selectButton);
-		// 返回
 		Button backButton = (Button) this.findViewById(R.id.back);
-		// 下一步
 		Button nextButton = (Button) this.findViewById(R.id.next);
 		selectButton.setOnClickListener(this);
 		backButton.setOnClickListener(this);
@@ -164,7 +159,7 @@ public class DishActivity extends Activity implements OnClickListener, OnItemCli
 				TextView plus = (TextView) view.findViewById(R.id.plus);
 				final TextView countView = (TextView) view.findViewById(R.id.count);
 				
-				OrderItem orderDish = order.findOrderDish(dish.getId());
+				OrderItem orderDish = order.findOrderItem(dish.getId());
 				if (orderDish != null) {
 					countView.setText(orderDish.getCount().toString());
 				}
@@ -175,7 +170,7 @@ public class DishActivity extends Activity implements OnClickListener, OnItemCli
 						Integer count = Integer.valueOf(countView.getText().toString());
 						Double totalAmount = order.getTotalAmount();
 						Integer totalCount = order.getTotalCount();
-						OrderItem orderDish = order.findOrderDish(dish.getId());
+						OrderItem orderDish = order.findOrderItem(dish.getId());
 						switch(v.getId()) {
 						case R.id.minus: // 减少一份
 							if (count == 0)
@@ -186,7 +181,7 @@ public class DishActivity extends Activity implements OnClickListener, OnItemCli
 							orderDish.setCount(count);
 							totalAmount -= dish.getPrice();
 							if (count == 0) { // 删除该OrderDish
-								order.deleteOrderDish(orderDish);
+								order.deleteOrderItem(orderDish);
 							}
 							
 							break;
@@ -197,7 +192,7 @@ public class DishActivity extends Activity implements OnClickListener, OnItemCli
 							if (count == 1) { // 添加OrderDish
 								orderDish = new OrderItem();
 								orderDish.setDish(dish);
-								order.addOrderDish(orderDish);
+								order.addOrderItem(orderDish);
 							}
 							orderDish.setCount(count);
 							break;
