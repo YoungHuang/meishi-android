@@ -7,6 +7,7 @@ import meishi.db.PreferenceService;
 import meishi.service.AreaService;
 import meishi.service.CityService;
 import meishi.service.DishCategoryService;
+import meishi.service.DishService;
 import meishi.service.DistrictService;
 import meishi.service.HotAreaService;
 import meishi.service.OrderService;
@@ -22,6 +23,7 @@ public class MainApplication extends Application {
 	private ShopService shopService;
 	private OrderService orderService;
 	private DishCategoryService dishCategoryService;
+	private DishService dishService;
 
 	@Override
 	public void onCreate() {
@@ -51,6 +53,7 @@ public class MainApplication extends Application {
 			shopService = new ShopService();
 			orderService = new OrderService();
 			dishCategoryService = new DishCategoryService();
+			dishService  = new DishService();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -86,5 +89,9 @@ public class MainApplication extends Application {
 	
 	public DishCategoryService getDishCategoryService() {
 		return dishCategoryService;
+	}
+	
+	public DishService getDishService() {
+		return dishService;
 	}
 }

@@ -4,28 +4,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 import meishi.MainApplication;
+import meishi.domain.Dish;
 import meishi.domain.DishCategory;
 import meishi.domain.Order;
+import meishi.domain.OrderItem;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.DishCategoryService;
+import meishi.service.DishService;
 import meishi.utils.ResponseCode;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class DishListActivity extends BaseActivity {
+public class DishListActivity extends BaseActivity implements OnClickListener {
+	private static final int MAX_RESULT = 10;
+
 	private DishCategoryService dishCategoryService;
+	private DishService dishService;
 
 	public static Order order;
-	
+	private DishCategory dishCategory;
+
+	private ListView dishCategoryListView;
 	private DishCategoryListAdapter dishCategoryListAdapter;
+	private ListView dishListView;
+	private DishListAdapter dishListAdapter;
+	private View footerView;
+	private LinearLayout moreExceptionLayout;
+
+	private TextView totalCountView;
+	private TextView totalAmountView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,43 +56,147 @@ public class DishListActivity extends BaseActivity {
 
 		initVariables();
 
+		initView();
+
 		initDishCategorys();
 
-		TextView totalCountView = (TextView) findViewById(R.id.totalCount);
-		TextView totalAmountView = (TextView) findViewById(R.id.totalAmount);
-		ListView dishCategoryListView = (ListView) findViewById(R.id.dishCategoryList);
-		ListView dishListView = (ListView) findViewById(R.id.dishList);
+		initDishes();
+
+		Button backButton = (Button) this.findViewById(R.id.back);
+		Button nextButton = (Button) this.findViewById(R.id.next);
+		backButton.setOnClickListener(this);
+		nextButton.setOnClickListener(this);
 	}
 
 	private void initVariables() {
 		MainApplication application = (MainApplication) getApplicationContext();
 		dishCategoryService = application.getDishCategoryService();
+		dishService = application.getDishService();
+	}
+
+	private void initView() {
+		totalCountView = (TextView) findViewById(R.id.totalCount);
+		totalAmountView = (TextView) findViewById(R.id.totalAmount);
+
+		if (order == null) {
+			order = new Order();
+		}
+
+		totalCountView.setText(order.getTotalCount());
+		totalAmountView.setText(order.getTotalAmount().toString());
 	}
 
 	private void initDishCategorys() {
-		ListView dishCategoryListView = (ListView) findViewById(R.id.dishCategoryList);
+		dishCategoryListView = (ListView) findViewById(R.id.dishCategoryList);
 		dishCategoryListAdapter = new DishCategoryListAdapter();
 		dishCategoryListView.setAdapter(dishCategoryListAdapter);
 
-		dishCategoryService.loadDishCategorys(ShopDetailActivity.shop.getId(), new AsyncTaskCallBack<List<DishCategory>>() {
+		loadDishCategorys();
+	}
+
+	private void loadDishCategorys() {
+		dishCategoryService.loadDishCategorys(ShopDetailActivity.shop.getId(),
+				new AsyncTaskCallBack<List<DishCategory>>() {
+					@Override
+					public void onSuccess(List<DishCategory> dishCategoryList) {
+						dishCategoryListAdapter.addMoreItems(dishCategoryList);
+						dishCategory = DishCategory.findDefualt(dishCategoryList);
+						loadDishes(0, MAX_RESULT);
+					}
+
+					@Override
+					public void onError(ResponseCode code) {
+						// Error
+					}
+				});
+
+		dishCategoryListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onSuccess(List<DishCategory> dishCategoryList) {
-				dishCategoryListAdapter.addMoreItems(dishCategoryList);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				dishCategory = (DishCategory) dishCategoryListAdapter.getItem(position);
+				loadDishes(0, MAX_RESULT);
+			}
+		});
+	}
+
+	private void initDishes() {
+		dishListView = (ListView) findViewById(R.id.dishList);
+		footerView = LayoutInflater.from(DishListActivity.this).inflate(R.layout.list_item_more, null);
+		dishListView.addFooterView(footerView);
+
+		moreExceptionLayout = (LinearLayout) footerView.findViewById(R.id.more_exception_layout);
+
+		dishListAdapter = new DishListAdapter();
+		dishListView.setAdapter(dishListAdapter);
+		dishListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Dish dish = (Dish) dishListAdapter.getItem(position);
+				OrderItem orderItem = order.findOrderItem(dish.getId());
+				if (orderItem == null) {
+					orderItem = new OrderItem();
+					orderItem.setDish(dish);
+					orderItem.setCount(0);
+					order.addOrderItem(orderItem);
+					order.setTotalCount(order.getTotalCount() + 1);
+					order.setTotalAmount(order.getTotalAmount() + dish.getPrice());
+				} else {
+					order.deleteOrderItem(orderItem);
+					order.setTotalCount(order.getTotalCount() - 1);
+					order.setTotalAmount(order.getTotalAmount() - dish.getPrice());
+				}
+
+				totalCountView.setText(order.getTotalCount());
+				totalAmountView.setText(order.getTotalAmount().toString());
+			}
+		});
+
+		dishListView.setOnScrollListener(new OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				if ((firstVisibleItem + visibleItemCount) == totalItemCount) {
+					loadDishes(dishListAdapter.getCount(), MAX_RESULT);
+				}
+			}
+		});
+	}
+
+	private void loadDishes(Integer offset, Integer max) {
+		final LinearLayout moreLoadLayout = (LinearLayout) footerView.findViewById(R.id.more_load_layout);
+
+		dishService.loadDishes(dishCategory.getId(), offset, max, new AsyncTaskCallBack<List<Dish>>() {
+			@Override
+			public void onSuccess(List<Dish> dishList) {
+				dishListAdapter.addMoreItems(dishList);
+				moreLoadLayout.setVisibility(View.VISIBLE);
+				moreExceptionLayout.setVisibility(View.GONE);
 			}
 
 			@Override
 			public void onError(ResponseCode code) {
-				// Error
+				moreLoadLayout.setVisibility(View.GONE);
+				moreExceptionLayout.setVisibility(View.VISIBLE);
 			}
 		});
-		
-		dishCategoryListView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.back:
+			this.finish();
+			break;
+		case R.id.next:
+			Intent intent = new Intent(this, ConfirmOrderActivity.class);
+			this.startActivity(intent);
+			break;
+		}
+
 	}
 
 	private class DishCategoryListAdapter extends BaseAdapter {
@@ -110,10 +235,13 @@ public class DishListActivity extends BaseActivity {
 			}
 			DishCategory dishCategory = dishCategoryList.get(position);
 			holder.categoryName.setText(dishCategory.getName());
+			if (dishCategory.isDefaul()) {
+				// TODO
+			}
 
 			return convertView;
 		}
-		
+
 		public void addMoreItems(List<DishCategory> dishCategorys) {
 			dishCategoryList.addAll(dishCategorys);
 			this.notifyDataSetChanged();
@@ -125,29 +253,68 @@ public class DishListActivity extends BaseActivity {
 	}
 
 	private class DishListAdapter extends BaseAdapter {
+		List<Dish> dishList;
+
+		public DishListAdapter() {
+			dishList = new ArrayList<Dish>();
+		}
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			return 0;
+			return dishList.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return null;
+			return dishList.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
-			return 0;
+			return dishList.get(position).getId();
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-			return null;
+			Holder holder;
+			if (convertView == null) {
+				convertView = LayoutInflater.from(DishListActivity.this).inflate(R.layout.list_item_dish, null);
+				holder = new Holder();
+				holder.dishName = (TextView) convertView.findViewById(R.id.dishName);
+				holder.count = (TextView) convertView.findViewById(R.id.count);
+				holder.price = (TextView) convertView.findViewById(R.id.price);
+				convertView.setTag(holder);
+			} else {
+				holder = (Holder) convertView.getTag();
+			}
+			Dish dish = dishList.get(position);
+			holder.dishName.setText(dish.getName());
+			holder.price.setText(dish.getPrice().toString());
+			OrderItem orderItem = order.findOrderItem(dish.getId());
+			if (orderItem != null) {
+				holder.count.setVisibility(View.VISIBLE);
+				holder.count.setText(orderItem.getCount());
+			} else {
+				holder.count.setVisibility(View.INVISIBLE);
+			}
+
+			return convertView;
+		}
+
+		public void addMoreItems(List<Dish> dishes) {
+			dishList.addAll(dishes);
+			this.notifyDataSetChanged();
+		}
+
+		public void setItems(List<Dish> dishes) {
+			dishList = dishes;
+			this.notifyDataSetChanged();
+		}
+
+		private class Holder {
+			TextView dishName;
+			TextView count;
+			TextView price;
 		}
 	}
 }

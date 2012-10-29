@@ -20,6 +20,8 @@ public class DishCategory {
 	/** 菜品数量 **/
 	@DatabaseField
 	private int count;
+	@DatabaseField
+	private boolean defaul;
 	@DatabaseField(foreign = true, index = true)
 	private Shop shop;
 	
@@ -47,11 +49,29 @@ public class DishCategory {
 		this.count = count;
 	}
 
+	public boolean isDefaul() {
+		return defaul;
+	}
+
+	public void setDefaul(boolean defaul) {
+		this.defaul = defaul;
+	}
+
 	public Shop getShop() {
 		return shop;
 	}
 
 	public void setShop(Shop shop) {
 		this.shop = shop;
+	}
+	
+	public static DishCategory findDefualt(List<DishCategory> dishCategoryList) {
+		for (DishCategory dishCategory : dishCategoryList) {
+			if (dishCategory.isDefaul()) {
+				return dishCategory;
+			}
+		}
+		
+		return null;
 	}
 }

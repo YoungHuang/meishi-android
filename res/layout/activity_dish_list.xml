@@ -57,8 +57,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dip"
-            android:layout_weight="1.0"
-            android:layout_toRightOf="@id/menuLayout" >
+            android:layout_toRightOf="@id/menuLayout"
+            android:layout_weight="1.0" >
 
             <ListView
                 android:id="@+id/dishList"
@@ -79,5 +79,38 @@
                 layout="@layout/list_empty" />
         </LinearLayout>
     </RelativeLayout>
+
+    <LinearLayout
+        style="@style/step_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom" >
+
+        <Button
+            android:id="@+id/back"
+            style="@style/left_step"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:text="@string/order_return" />
+
+        <ImageView
+            style="@style/step_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/step_1" />
+
+        <Button
+            android:id="@+id/next"
+            style="@style/right_step"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:shadowColor="#00000000"
+            android:text="@string/order_next"
+            android:textColor="#ffffffff"
+            android:textSize="16.0sp" />
+    </LinearLayout>
 
 </LinearLayout>
