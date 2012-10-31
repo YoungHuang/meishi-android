@@ -1,8 +1,10 @@
 package meishi.network;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -64,7 +66,7 @@ public class NetworkService {
 	 * 发送GET请求
 	 * @throws Exception 
 	 */
-	public static <T> T getForObject(String url, Class<T> responseType, Map<String, String> urlVariables) throws Exception {
+	public static <T> T getForObject(String url, Class<T> responseType, Map<String, String> urlVariables) throws IOException, ResponseException {
 		Gson gson = new Gson();
 		byte[] data = sendGetRequest(url, urlVariables);
 		String json = new String(data, enc);
@@ -76,7 +78,7 @@ public class NetworkService {
 	 * 发送POST请求
 	 * @throws Exception 
 	 */
-	public static <T> T postForObject(String url, Object request, Class<T> responseType) throws Exception {
+	public static <T> T postForObject(String url, Object request, Class<T> responseType) throws IOException, ResponseException {
 		Gson gson = new Gson();
 		byte[] data = sendPostRequest(url, gson.toJson(request), enc);
 		String json = new String(data, enc);
@@ -84,7 +86,7 @@ public class NetworkService {
 		return t;
 	}
 	
-	public static <T> List<T> getForList(String url, Type type, Map<String, String> urlVariables) throws Exception {
+	public static <T> List<T> getForList(String url, Type type, Map<String, String> urlVariables) throws IOException, ResponseException {
 		byte[] data = sendGetRequest(url, urlVariables);
 		String json = new String(data, enc);
 		Gson gson = new Gson();
@@ -94,8 +96,10 @@ public class NetworkService {
 	
 	/**
 	 * 发送GET请求
+	 * @throws IOException 
+	 * @throws ResponseException 
 	 */
-	public static byte[] sendGetRequest(String path, Map<String, String> params) throws Exception {
+	public static byte[] sendGetRequest(String path, Map<String, String> params) throws IOException, ResponseException {
 		Log.d(TAG, "sendGetRequest: " + path);
 		StringBuilder sb = new StringBuilder(path);
 		if(params!=null && !params.isEmpty()){
@@ -111,20 +115,31 @@ public class NetworkService {
 		conn.setRequestMethod("GET");
 		conn.setConnectTimeout(5 * 1000);
 		conn.setRequestProperty("Content-Type", "application/json");
-		if(conn.getResponseCode() == 200){
-			InputStream inStream = conn.getInputStream();//通过输入流获取数据
-			byte[] data = readInputStream(inStream);
+		InputStream inStream = conn.getInputStream();//通过输入流获取数据
+		byte[] data;
+		if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+			data = readInputStream(inStream);
 
 			return data;
 		}
-		
-		return null;
+		data = readInputStream(inStream);
+		ResponseException ex = contructResponseException(data);
+		throw ex;
+	}
+	
+	private static ResponseException contructResponseException(byte[] data) throws IOException, ResponseException {
+		ResponseException ex = new ResponseException();
+		String json = new String(data, enc);
+		Gson gson = new Gson();
+		ResponseMessage responseMessage = gson.fromJson(json, ResponseMessage.class);
+		ex.setResponseMessage(responseMessage);
+		return ex;
 	}
 	
 	/**
 	 * 发送POST请求
 	 */
-	public static byte[] sendPostRequest(String path, Map<String, String> params, String enc) throws Exception {
+	public static byte[] sendPostRequest(String path, Map<String, String> params, String enc) throws IOException, ResponseException {
 		Log.d(TAG, "sendPostRequest: " + path);
 		StringBuilder sb = new StringBuilder();
 		if(params!=null && !params.isEmpty()){
@@ -146,20 +161,22 @@ public class NetworkService {
 		outStream.write(entitydata);
 		outStream.flush();
 		outStream.close();
+		byte[] data;
+		InputStream inStream = conn.getInputStream();//通过输入流获取数据
 		if(conn.getResponseCode() == 200){
-			InputStream inStream = conn.getInputStream();//通过输入流获取数据
-			byte[] data = readInputStream(inStream);
+			data = readInputStream(inStream);
 
 			return data;
 		}
-		
-		return null;
+		data = readInputStream(inStream);
+		ResponseException ex = contructResponseException(data);
+		throw ex;
 	}
 	
 	/**
 	 * 发送POST请求
 	 */
-	public static byte[] sendPostRequest(String path, String json, String enc) throws Exception {
+	public static byte[] sendPostRequest(String path, String json, String enc) throws IOException, ResponseException {
 		Log.d(TAG, "sendPostRequest: " + path);
 
 		byte[] entitydata = json.getBytes();//得到实体的二进制数据
@@ -174,23 +191,26 @@ public class NetworkService {
 		outStream.write(entitydata);
 		outStream.flush();
 		outStream.close();
+		byte[] data;
+		InputStream inStream = conn.getInputStream();//通过输入流获取数据
 		if(conn.getResponseCode() == 200){
-			InputStream inStream = conn.getInputStream();//通过输入流获取数据
-			byte[] data = readInputStream(inStream);
+			data = readInputStream(inStream);
 
 			return data;
 		}
-		
-		return null;
+		data = readInputStream(inStream);
+		ResponseException ex = contructResponseException(data);
+		throw ex;
 	}
 	
 	/**
 	 * 从输入流中获取数据
 	 * @param inStream 输入流
 	 * @return
+	 * @throws IOException 
 	 * @throws Exception
 	 */
-	private static byte[] readInputStream(InputStream inStream) throws Exception{
+	private static byte[] readInputStream(InputStream inStream) throws IOException {
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 		byte[] buffer = new byte[1024];
 		int len = 0;

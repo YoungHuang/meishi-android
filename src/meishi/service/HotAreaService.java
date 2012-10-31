@@ -1,5 +1,6 @@
 package meishi.service;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -9,6 +10,8 @@ import java.util.Map;
 import meishi.db.DaoSupport;
 import meishi.domain.HotArea;
 import meishi.network.NetworkService;
+import meishi.network.ResponseException;
+import meishi.network.ResponseMessage;
 import meishi.utils.ResponseCode;
 
 import android.util.Log;
@@ -21,11 +24,11 @@ public class HotAreaService extends DaoSupport<HotArea, Integer> {
 	public HotAreaService() throws SQLException {
 		super(HotArea.class);
 	}
-	
+
 	public List<HotArea> findAllByCityId(Integer cityId) throws SQLException {
 		return queryForEq("city_id", cityId);
 	}
-	
+
 	public void saveList(List<HotArea> hotAreaList) {
 		if (hotAreaList != null) {
 			for (HotArea hotArea : hotAreaList) {
@@ -62,16 +65,20 @@ public class HotAreaService extends DaoSupport<HotArea, Integer> {
 
 		@Override
 		protected List<HotArea> doInBackground(Map<String, String>... params) {
-			Type type = new TypeToken<List<HotArea>>(){}.getType();
+			Type type = new TypeToken<List<HotArea>>() { }.getType();
 			List<HotArea> hotAreaList = null;
 			try {
 				hotAreaList = NetworkService.getForList(url, type, params[0]);
-				saveList(hotAreaList);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				Log.e(TAG, "doInBackground", e);
-				code = ResponseCode.NETWORK_ERROR;
+				responseMessage = new ResponseMessage("Network error!");
+				responseMessage.setErrorCode(ResponseMessage.NETWORK_ERROR);
+			} catch (ResponseException e) {
+				Log.e(TAG, "doInBackground", e);
+				responseMessage = e.getResponseMessage();
 			}
-			
+			saveList(hotAreaList);
+
 			return hotAreaList;
 		}
 	}

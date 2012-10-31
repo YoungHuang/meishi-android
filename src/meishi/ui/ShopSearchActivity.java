@@ -7,6 +7,7 @@ import meishi.adapter.ShopListAdapter;
 import meishi.db.PreferenceService;
 import meishi.domain.City;
 import meishi.domain.Shop;
+import meishi.network.ResponseMessage;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.ShopService;
 import meishi.utils.ResponseCode;
@@ -129,7 +130,7 @@ public class ShopSearchActivity extends Activity implements OnItemClickListener 
 					}
 
 					@Override
-					public void onError(ResponseCode code) {
+					public void onError(ResponseMessage responseMessage) {
 						progressBar.setVisibility(View.GONE);
 						loadingMessage.setVisibility(View.GONE);
 						retryButton.setVisibility(View.VISIBLE);
@@ -156,7 +157,7 @@ public class ShopSearchActivity extends Activity implements OnItemClickListener 
 					}
 
 					@Override
-					public void onError(ResponseCode code) {
+					public void onError(ResponseMessage responseMessage) {
 						moreLoadLayout.setVisibility(View.GONE);
 						moreExceptionLayout.setVisibility(View.VISIBLE);
 					}

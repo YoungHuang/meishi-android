@@ -11,20 +11,22 @@ import android.util.Log;
 
 /**
  * 订单
+ * 
  * @author yonghuang
- *
+ * 
  */
 public class Order {
 	public final static Integer STATUS_NEW = 0;
 	public final static Integer STATUS_CONFIRM = 1;
-	
+
 	private Integer id;
 	private Shop shop;
 	private Double totalAmount = 0.0;
 	private Integer totalCount = 0;
-	private Integer people = 0;
+	private Integer people = 1;
 	private String description;
 	private Integer status = STATUS_NEW;
+	private String address;
 	private List<OrderItem> orderItemList = new ArrayList<OrderItem>();
 
 	public OrderItem findOrderItem(Integer dishId) {
@@ -32,18 +34,18 @@ public class Order {
 			if (orderItem.getDish().getId().equals(dishId))
 				return orderItem;
 		}
-		
+
 		return null;
 	}
 
 	public void addOrderItem(OrderItem orderItem) {
 		orderItemList.add(orderItem);
 	}
-	
+
 	public void deleteOrderItem(OrderItem orderItem) {
 		orderItemList.remove(orderItem);
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -83,7 +85,7 @@ public class Order {
 	public void setPeople(Integer people) {
 		this.people = people;
 	}
-	
+
 	public Integer getStatus() {
 		return status;
 	}
@@ -106,5 +108,13 @@ public class Order {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }

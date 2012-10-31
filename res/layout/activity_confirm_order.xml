@@ -5,8 +5,6 @@
     android:background="@drawable/main_bg"
     android:orientation="vertical" >
 
-    <!-- 标题 -->
-
     <TextView
         android:id="@+id/title"
         android:layout_width="fill_parent"
@@ -17,11 +15,48 @@
         android:textColor="#ffffffff"
         android:textSize="20.0sp" />
 
+    <!-- 导航条 -->
+
     <LinearLayout
+        android:id="@+id/nav"
+        style="@style/step_bg"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_marginBottom="40.0dip" >
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom" >
+
+        <Button
+            android:id="@+id/back"
+            style="@style/left_step"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="@drawable/selector_bg_btn_fav"
+            android:shadowColor="#00000000"
+            android:text="@string/order_back"
+            android:textColor="#ff000000" />
+
+        <ImageView
+            style="@style/step_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/step_2" />
+
+        <Button
+            android:id="@+id/next"
+            style="@style/right_step"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:shadowColor="#00000000"
+            android:text="@string/order_next" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/nav"
+        android:layout_below="@id/title" >
 
         <LinearLayout
             android:id="@+id/totalLayout"
@@ -123,17 +158,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12.0dip"
                     android:text="@string/order_detail" />
-            </LinearLayout>
 
-            <ListView
-                android:id="@+id/order_list"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:divider="#ffe0e0e0"
-                android:dividerHeight="1.0dip"
-                android:fadeScrollbars="false"
-                android:scrollbars="vertical" />
+                <ListView
+                    android:id="@+id/order_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:divider="#ffe0e0e0"
+                    android:dividerHeight="1.0dip"
+                    android:fadeScrollbars="false"
+                    android:scrollbars="vertical" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -156,7 +191,7 @@
                     android:id="@+id/desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="每餐加收8元外送费"
                     android:textColor="@color/Black"
                     android:textSize="14.0sp" />
             </LinearLayout>
@@ -194,41 +229,6 @@
                     android:textSize="14.0sp" />
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-    <!-- 导航条 -->
-
-    <LinearLayout
-        style="@style/step_bg"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom" >
-
-        <Button
-            android:id="@+id/back"
-            style="@style/left_step"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:background="@drawable/selector_bg_btn_fav"
-            android:shadowColor="#00000000"
-            android:text="@string/order_back"
-            android:textColor="#ff000000" />
-
-        <ImageView
-            style="@style/step_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/step_2" />
-
-        <Button
-            android:id="@+id/next"
-            style="@style/right_step"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:shadowColor="#00000000"
-            android:text="@string/order_next" />
     </LinearLayout>
 
 </RelativeLayout>

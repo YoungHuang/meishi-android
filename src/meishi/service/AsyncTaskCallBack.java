@@ -1,8 +1,8 @@
 package meishi.service;
 
-import meishi.utils.ResponseCode;
+import meishi.network.ResponseMessage;
 
 public interface AsyncTaskCallBack<T> {
 	public void onSuccess(T t);
-	public void onError(ResponseCode code);
+	public void onError(ResponseMessage responseMessage);
 }

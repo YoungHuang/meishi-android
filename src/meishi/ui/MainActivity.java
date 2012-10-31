@@ -39,23 +39,23 @@ public class MainActivity extends TabActivity {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch(checkedId) {
-				case R.id.radio_button1: // 首页
+				case R.id.radio_button1: // Home
 					tabHost.setCurrentTabByTag(TAB_HOME);
 					break;
 					
-				case R.id.radio_button2: // 附近
+				case R.id.radio_button2: // Nearby
 					tabHost.setCurrentTabByTag(TAB_COLLECT);
 					break;
 					
-				case R.id.radio_button3: // 收藏
+				case R.id.radio_button3: // Collection
 					tabHost.setCurrentTabByTag(TAB_COLLECT);
 					break;
 					
-				case R.id.radio_button4: // 订单
+				case R.id.radio_button4: // Personal center
 					tabHost.setCurrentTabByTag(TAB_COLLECT);
 					break;
 					
-				case R.id.radio_button5: // 更多
+				case R.id.radio_button5: // Settings
 					tabHost.setCurrentTabByTag(TAB_COLLECT);
 					break;
 				}

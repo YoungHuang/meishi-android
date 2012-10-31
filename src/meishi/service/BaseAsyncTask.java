@@ -1,19 +1,19 @@
 package meishi.service;
 
-import meishi.utils.ResponseCode;
+import meishi.network.ResponseMessage;
 import android.os.AsyncTask;
 
 public abstract class BaseAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 	protected AsyncTaskCallBack<Result> callBack;
-	protected ResponseCode code = ResponseCode.SUCCESS;
+	protected ResponseMessage responseMessage;
 	
 	@Override
 	protected void onPostExecute(Result result) {
 		if (callBack != null) {
-			if (code == ResponseCode.SUCCESS) {
+			if (responseMessage == null) {
 				callBack.onSuccess(result);
 			} else {
-				callBack.onError(code);
+				callBack.onError(responseMessage);
 			}
 		}
 	}

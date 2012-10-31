@@ -8,10 +8,10 @@ import meishi.db.PreferenceService;
 import meishi.domain.Area;
 import meishi.domain.City;
 import meishi.domain.District;
+import meishi.network.ResponseMessage;
 import meishi.service.AreaService;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.DistrictService;
-import meishi.utils.ResponseCode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -96,7 +96,7 @@ public class AreaListActivity extends Activity {
 			}
 
 			@Override
-			public void onError(ResponseCode code) {
+			public void onError(ResponseMessage responseMessage) {
 				loadingMessage.setVisibility(View.GONE);
 				retryButton.setVisibility(View.VISIBLE);
 			}

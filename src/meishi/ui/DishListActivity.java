@@ -8,9 +8,12 @@ import meishi.domain.Dish;
 import meishi.domain.DishCategory;
 import meishi.domain.Order;
 import meishi.domain.OrderItem;
+import meishi.domain.Shop;
+import meishi.network.ResponseMessage;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.DishCategoryService;
 import meishi.service.DishService;
+import meishi.utils.GlobalData;
 import meishi.utils.ResponseCode;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,7 +38,8 @@ public class DishListActivity extends BaseActivity implements OnClickListener {
 	private DishCategoryService dishCategoryService;
 	private DishService dishService;
 
-	public static Order order;
+	public Order order;
+	public static Shop shop;
 	private DishCategory dishCategory;
 
 	private ListView dishCategoryListView;
@@ -78,8 +82,10 @@ public class DishListActivity extends BaseActivity implements OnClickListener {
 		totalCountView = (TextView) findViewById(R.id.totalCount);
 		totalAmountView = (TextView) findViewById(R.id.totalAmount);
 
-		if (order == null) {
-			order = new Order();
+		if (GlobalData.order == null) {
+			GlobalData.order = new Order();
+			order = GlobalData.order;
+			order.setShop(shop);
 		}
 
 		totalCountView.setText(order.getTotalCount());
@@ -105,7 +111,7 @@ public class DishListActivity extends BaseActivity implements OnClickListener {
 					}
 
 					@Override
-					public void onError(ResponseCode code) {
+					public void onError(ResponseMessage responseMessage) {
 						// Error
 					}
 				});
@@ -178,7 +184,7 @@ public class DishListActivity extends BaseActivity implements OnClickListener {
 			}
 
 			@Override
-			public void onError(ResponseCode code) {
+			public void onError(ResponseMessage responseMessage) {
 				moreLoadLayout.setVisibility(View.GONE);
 				moreExceptionLayout.setVisibility(View.VISIBLE);
 			}

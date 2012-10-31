@@ -8,6 +8,7 @@ import meishi.db.PreferenceService;
 import meishi.domain.Area;
 import meishi.domain.City;
 import meishi.domain.HotArea;
+import meishi.network.ResponseMessage;
 import meishi.service.AreaService;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.HotAreaService;
@@ -105,7 +106,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 			}
 
 			@Override
-			public void onError(ResponseCode code) {
+			public void onError(ResponseMessage responseMessage) {
 				progressBar.setVisibility(View.GONE);
 				loadingMessage.setVisibility(View.GONE);
 				retryButton.setVisibility(View.VISIBLE);

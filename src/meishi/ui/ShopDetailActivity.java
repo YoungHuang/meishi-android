@@ -52,8 +52,8 @@ public class ShopDetailActivity extends Activity implements OnClickListener {
 			this.startActivity(intent);
 			break;
 		case R.id.order: // 点外卖
-			intent = new Intent(this, DishActivity.class);
-			DishActivity.shop = shop;
+			intent = new Intent(this, DishListActivity.class);
+			DishListActivity.shop = shop;
 			this.startActivity(intent);
 			break;
 		}

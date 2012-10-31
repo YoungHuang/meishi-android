@@ -1,13 +1,14 @@
 package meishi.service;
 
+import java.io.IOException;
 import java.sql.SQLException;
-
-import android.util.Log;
 
 import meishi.db.DaoSupport;
 import meishi.domain.Order;
 import meishi.network.NetworkService;
-import meishi.utils.ResponseCode;
+import meishi.network.ResponseException;
+import meishi.network.ResponseMessage;
+import android.util.Log;
 
 public class OrderService extends DaoSupport<Order, Integer> {
 	private static final String url = NetworkService.hostUrl + "/order/save";
@@ -15,7 +16,7 @@ public class OrderService extends DaoSupport<Order, Integer> {
 	public OrderService() throws SQLException {
 		super(Order.class);
 	}
-	
+
 	public void submitOrder(Order order, AsyncTaskCallBack<Void> callBack) {
 		new OrderAsyncTask(callBack).execute(order);
 	}
@@ -28,16 +29,22 @@ public class OrderService extends DaoSupport<Order, Integer> {
 		@Override
 		protected Void doInBackground(Order... params) {
 			Order order = params[0];
+			String respone;
 			try {
-				String respone = NetworkService.postForObject(url, order, String.class);
+				respone = NetworkService.postForObject(url, order, String.class);
 				if (!"success".equals(respone)) {
-					code = ResponseCode.FAILED;
+					responseMessage = new ResponseMessage("Submit order failed!");
+					responseMessage.setErrorCode(ResponseMessage.FAILED);
 				}
-			} catch (Exception e) {
+			} catch (IOException e) {
 				Log.e(TAG, "doInBackground", e);
-				code = ResponseCode.NETWORK_ERROR;
+				responseMessage = new ResponseMessage("Network error!");
+				responseMessage.setErrorCode(ResponseMessage.NETWORK_ERROR);
+			} catch (ResponseException e) {
+				Log.e(TAG, "doInBackground", e);
+				responseMessage = e.getResponseMessage();
 			}
-			
+
 			return null;
 		}
 	}
