@@ -13,11 +13,13 @@ import android.content.SharedPreferences;
 public class PreferenceService {
 	private final static String PREFERENCES_NAME = "Preferences";
 	private final static String CITY_NAME = "CityName";
+	private final static String COOKIE = "Cookie";
 	
 	private CityService cityService;
 	private SharedPreferences preferences;
 	
 	private City city;
+	private String cookie;
 	
 	public PreferenceService(Context context, CityService cityService) {
 		preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -36,5 +38,14 @@ public class PreferenceService {
 		}
 		
 		return city;
+	}
+	
+	public void setCookie(String cookie) {
+		this.cookie = cookie;
+		preferences.edit().putString(COOKIE, cookie).commit();
+	}
+	
+	public String getCookie() {
+		return cookie;
 	}
 }

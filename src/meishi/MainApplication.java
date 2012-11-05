@@ -12,6 +12,7 @@ import meishi.service.DistrictService;
 import meishi.service.HotAreaService;
 import meishi.service.OrderService;
 import meishi.service.ShopService;
+import meishi.service.UserService;
 import android.app.Application;
 
 public class MainApplication extends Application {
@@ -24,6 +25,7 @@ public class MainApplication extends Application {
 	private OrderService orderService;
 	private DishCategoryService dishCategoryService;
 	private DishService dishService;
+	private UserService userService;
 
 	@Override
 	public void onCreate() {
@@ -54,6 +56,7 @@ public class MainApplication extends Application {
 			orderService = new OrderService();
 			dishCategoryService = new DishCategoryService();
 			dishService  = new DishService();
+			userService = new UserService(preferenceService);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -93,5 +96,9 @@ public class MainApplication extends Application {
 	
 	public DishService getDishService() {
 		return dishService;
+	}
+	
+	public UserService getUserService() {
+		return userService;
 	}
 }

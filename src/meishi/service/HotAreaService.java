@@ -12,8 +12,6 @@ import meishi.domain.HotArea;
 import meishi.network.NetworkService;
 import meishi.network.ResponseException;
 import meishi.network.ResponseMessage;
-import meishi.utils.ResponseCode;
-
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
