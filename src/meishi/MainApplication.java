@@ -16,6 +16,8 @@ import meishi.service.UserService;
 import android.app.Application;
 
 public class MainApplication extends Application {
+	private static MainApplication application;
+	
 	private PreferenceService preferenceService;
 	private CityService cityService;
 	private DistrictService districtService;
@@ -30,6 +32,7 @@ public class MainApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		application = this;
 		// !!!Must initialize database before initialize services which use database
 		initDB();
 		initVariables();
@@ -40,6 +43,10 @@ public class MainApplication extends Application {
 		super.onTerminate();
 		DatabaseHelper.getHelper().close();
 	}
+	
+	public static MainApplication getInstance() {
+		return application;
+	}
 
 	private void initDB() {
 		DatabaseHelper.setContext(this);
@@ -49,14 +56,14 @@ public class MainApplication extends Application {
 		try {
 			cityService = new CityService();
 			areaService = new AreaService();
-			districtService = new DistrictService(areaService);
+			districtService = new DistrictService();
 			hotAreaService = new HotAreaService();
-			preferenceService = new PreferenceService(this, cityService);
+			preferenceService = new PreferenceService();
 			shopService = new ShopService();
 			orderService = new OrderService();
 			dishCategoryService = new DishCategoryService();
 			dishService  = new DishService();
-			userService = new UserService(preferenceService);
+			userService = new UserService();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

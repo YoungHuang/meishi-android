@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import meishi.MainApplication;
 import meishi.db.DaoSupport;
 import meishi.domain.Area;
 import meishi.domain.District;
@@ -22,11 +23,8 @@ public class DistrictService extends DaoSupport<District, Integer> {
 	private static final String districtUrl = NetworkService.hostUrl + "/district/list";
 	private static final String areaUrl = NetworkService.hostUrl + "/area/list";
 
-	private AreaService areaService;
-
-	public DistrictService(AreaService areaService) throws SQLException {
+	public DistrictService() throws SQLException {
 		super(District.class);
-		this.areaService = areaService;
 	}
 
 	public static void onCreate(SQLiteDatabase db) {
@@ -82,6 +80,7 @@ public class DistrictService extends DaoSupport<District, Integer> {
 				type = new TypeToken<List<Area>>() { }.getType();
 				List<Area> areaList = null;
 				areaList = NetworkService.getForList(areaUrl, type, params[0]);
+				AreaService areaService = MainApplication.getInstance().getAreaService();
 				areaService.saveList(areaList);
 			} catch (IOException e) {
 				Log.e(TAG, "doInBackground", e);

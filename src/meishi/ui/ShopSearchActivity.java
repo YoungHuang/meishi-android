@@ -10,7 +10,6 @@ import meishi.domain.Shop;
 import meishi.network.ResponseMessage;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.ShopService;
-import meishi.utils.ResponseCode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

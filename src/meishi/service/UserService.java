@@ -3,6 +3,7 @@ package meishi.service;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import meishi.MainApplication;
 import meishi.db.DaoSupport;
 import meishi.db.PreferenceService;
 import meishi.domain.User;
@@ -16,13 +17,13 @@ public class UserService extends DaoSupport<User, Integer> {
 	
 	private PreferenceService preferenceService;
 
-	public UserService(PreferenceService preferenceService) throws SQLException {
+	public UserService() throws SQLException {
 		super(User.class);
-		this.preferenceService = preferenceService;
+		this.preferenceService = MainApplication.getInstance().getPreferenceService();
 	}
 	
-	public void login(String userId, String password, AsyncTaskCallBack<Void> callBack) {
-		String[] params = new String[] {userId, password};
+	public void login(String name, String password, AsyncTaskCallBack<Void> callBack) {
+		String[] params = new String[] {name, password};
 		new UserAsyncTask(callBack).execute(params);
 	}
 
@@ -34,8 +35,10 @@ public class UserService extends DaoSupport<User, Integer> {
 		@Override
 		protected Void doInBackground(String... params) {
 			try {
-				String cookie = NetworkService.login(url, params[0], params[1]);
-				preferenceService.setCookie(cookie);
+				User user = NetworkService.login(url, params[0], params[1]);
+				preferenceService.setCookie(user.getCookie());
+				preferenceService.setUser(user);
+				createOrUpdate(user);
 			} catch (IOException e) {
 				Log.e(TAG, "doInBackground", e);
 				responseMessage = new ResponseMessage("Network error!");
@@ -43,6 +46,8 @@ public class UserService extends DaoSupport<User, Integer> {
 			} catch (ResponseException e) {
 				Log.e(TAG, "doInBackground", e);
 				responseMessage = e.getResponseMessage();
+			} catch (SQLException e) {
+				Log.e(TAG, "doInBackground", e);
 			}
 			return null;
 		}

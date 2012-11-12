@@ -10,9 +10,10 @@ public class User {
 	/** 姓名 **/
 	private String name;
 	/** 地址 **/
-	private Address address;
+	private String address;
 	/** 电话 **/
 	private String phone;
+	private String cookie;
 	
 	public Integer getId() {
 		return id;
@@ -29,20 +30,28 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Address getAddress() {
+
+	public String getAddress() {
 		return address;
 	}
-	
-	public void setAddress(Address address) {
+
+	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 	public String getPhone() {
 		return phone;
 	}
 	
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getCookie() {
+		return cookie;
+	}
+
+	public void setCookie(String cookie) {
+		this.cookie = cookie;
 	}
 }

@@ -40,6 +40,7 @@
     <string name="total_count">已选：0</string>
     <string name="total_amount">共0.0元</string>
     <string name="confirm">确定</string>
+    <string name="register">注册</string>
     <string name="address">地址:</string>
     <string name="modify_address">修改地址</string>
 

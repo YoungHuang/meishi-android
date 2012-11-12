@@ -11,6 +11,8 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
+import meishi.db.PreferenceService;
+import meishi.domain.User;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.ConnectivityManager;
@@ -59,23 +61,33 @@ public class NetworkService {
 		return icon;
 	}
 
-	public static String login(String path, String userId, String password) throws IOException, ResponseException {
+	public static User login(String path, String name, String password) throws IOException, ResponseException {
 		StringBuilder sb = new StringBuilder(path);
-		sb.append("?userId=").append(userId).append("&password=").append(password);
+		sb.append("?name=").append(name).append("&password=").append(password);
 		URL url = new URL(sb.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setConnectTimeout(5 * 1000);
 		conn.setRequestProperty("Content-Type", "application/json");
+		conn.setRequestProperty("cookie", getCookie());
 		InputStream inStream = conn.getInputStream();
 		byte[] data;
 		if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+			data = readInputStream(inStream);
 			String cookie = conn.getHeaderField("set-cookie");
-			return cookie;
+			Gson gson = new Gson();
+			String json = new String(data, enc);
+			User user = gson.fromJson(json, User.class);
+			user.setCookie(cookie);
+			return user;
 		}
 		data = readInputStream(inStream);
 		ResponseException ex = contructResponseException(data);
 		throw ex;
+	}
+
+	private static String getCookie() {
+		return PreferenceService.getInstance().getCookie();
 	}
 
 	/**
@@ -136,6 +148,7 @@ public class NetworkService {
 		conn.setRequestMethod("GET");
 		conn.setConnectTimeout(5 * 1000);
 		conn.setRequestProperty("Content-Type", "application/json");
+		conn.setRequestProperty("cookie", getCookie());
 		// 通过输入流获取数据
 		InputStream inStream = conn.getInputStream();
 		byte[] data;
@@ -180,6 +193,7 @@ public class NetworkService {
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type", "application/json");
 		conn.setRequestProperty("Content-Length", String.valueOf(entitydata.length));
+		conn.setRequestProperty("cookie", getCookie());
 		OutputStream outStream = conn.getOutputStream();
 		outStream.write(entitydata);
 		outStream.flush();
@@ -211,6 +225,7 @@ public class NetworkService {
 		conn.setDoOutput(true);
 		conn.setRequestProperty("Content-Type", "application/json");
 		conn.setRequestProperty("Content-Length", String.valueOf(entitydata.length));
+		conn.setRequestProperty("cookie", getCookie());
 		OutputStream outStream = conn.getOutputStream();
 		outStream.write(entitydata);
 		outStream.flush();

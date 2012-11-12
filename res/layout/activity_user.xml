@@ -16,35 +16,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="name: " />
-        <TextView
+
+        <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="name"
-            android:layout_toRightOf="@id/loginLayout" />
-        
+            android:layout_toRightOf="@id/loginLayout"
+            android:hint="name" />
+
         <TextView
             android:id="@+id/passwordText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="password: "
-            android:layout_below="@id/nameText" />
+            android:layout_below="@id/nameText"
+            android:text="password: " />
 
         <TextView
             android:id="@+id/password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="password"
+            android:layout_below="@id/name"
             android:layout_toRightOf="@id/passwordText"
-            android:layout_below="@id/name" />
-        
-        <Button
-            android:id="@+id/confirm"
-            android:layout_width="wrap_content"
+            android:hint="password" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/confirm"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/passwordText" />
+            android:layout_below="@id/password" >
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm"
+                android:layout_weight="1.0" />
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register"
+                android:layout_weight="1.0" />
+        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>
