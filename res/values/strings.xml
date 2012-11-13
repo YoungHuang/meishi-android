@@ -43,5 +43,7 @@
     <string name="register">注册</string>
     <string name="address">地址:</string>
     <string name="modify_address">修改地址</string>
+    <string name="my_order">我的订单</string>
+    <string name="my_address">我的地址</string>
 
 </resources>

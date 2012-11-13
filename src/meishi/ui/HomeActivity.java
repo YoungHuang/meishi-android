@@ -12,7 +12,6 @@ import meishi.network.ResponseMessage;
 import meishi.service.AreaService;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.HotAreaService;
-import meishi.utils.ResponseCode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

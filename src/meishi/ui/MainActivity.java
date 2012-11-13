@@ -14,6 +14,7 @@ public class MainActivity extends TabActivity {
 
 	private static final String TAB_HOME = "TabHome";
 	private static final String TAB_COLLECT = "TabCollect";
+	private static final String TAB_USER = "TabUser";
 	
 	TabHost tabHost;
 	
@@ -28,9 +29,14 @@ public class MainActivity extends TabActivity {
 		TabSpec tab1 = tabHost.newTabSpec(TAB_HOME).setIndicator(TAB_HOME);
 		tab1.setContent(new Intent(this, HomeActivity.class));
 		tabHost.addTab(tab1);
+		
 		TabSpec tab3 = tabHost.newTabSpec(TAB_COLLECT).setIndicator(TAB_COLLECT);
 		tab3.setContent(new Intent(this, CollectActivity.class));
 		tabHost.addTab(tab3);
+		
+		TabSpec tab4 = tabHost.newTabSpec(TAB_USER).setIndicator(TAB_USER);
+		tab4.setContent(new Intent(this, UserHomeActivity.class));
+		tabHost.addTab(tab4);
 		
 		tabHost.setCurrentTabByTag(TAB_HOME);
 		
@@ -52,7 +58,7 @@ public class MainActivity extends TabActivity {
 					break;
 					
 				case R.id.radio_button4: // Personal center
-					tabHost.setCurrentTabByTag(TAB_COLLECT);
+					tabHost.setCurrentTabByTag(TAB_USER);
 					break;
 					
 				case R.id.radio_button5: // Settings
@@ -63,4 +69,9 @@ public class MainActivity extends TabActivity {
 		});
 	}
 
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		tabHost.setCurrentTabByTag(TAB_HOME);
+	}
 }

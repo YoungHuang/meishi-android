@@ -9,12 +9,21 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class UserActivity extends BaseActivity implements OnClickListener {
+	public static final String ACTION = "Action";
+	public static final int ACTION_LOGIN = 0;
+	public static final int ACTION_REGISTER = 1;
+	
+	private int action = ACTION_LOGIN;
+	
 	private UserService userService;
 	
+	private RelativeLayout loginLayout;
+	private RelativeLayout registerLayout;
 	private TextView nameTxt;
 	private TextView passwordTxt;
 
@@ -25,6 +34,14 @@ public class UserActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_user);
 		
 		initVariables();
+		
+		action = this.getIntent().getIntExtra(ACTION, ACTION_LOGIN);
+		loginLayout = (RelativeLayout) findViewById(R.id.loginLayout);
+		registerLayout = (RelativeLayout) findViewById(R.id.registerLayout);
+		if (action == ACTION_REGISTER) {
+			loginLayout.setVisibility(View.GONE);
+			registerLayout.setVisibility(View.VISIBLE);
+		}
 		
 		nameTxt = (TextView) findViewById(R.id.name);
 		passwordTxt = (TextView) findViewById(R.id.password);
@@ -57,7 +74,7 @@ public class UserActivity extends BaseActivity implements OnClickListener {
 		userService.login(name, password, new AsyncTaskCallBack<Void>() {
 			@Override
 			public void onSuccess(Void t) {
-				startActivity(UserHomeActivity.class);
+				finish();
 			}
 
 			@Override

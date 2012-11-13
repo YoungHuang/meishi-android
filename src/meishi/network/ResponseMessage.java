@@ -3,6 +3,7 @@ package meishi.network;
 public class ResponseMessage {
 	public final static int FAILED = 1000;
 	public final static int NETWORK_ERROR = 1001;
+	public final static int NOT_LOGIN_ERROR = 1002;
 	
 	private int errorCode;
 	private String errorMessage;
