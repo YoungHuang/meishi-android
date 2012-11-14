@@ -21,7 +21,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/loginLayout"
+            android:layout_toRightOf="@id/nameText"
             android:hint="name" />
 
         <TextView
@@ -65,6 +65,57 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/newNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name: " />
+
+        <TextView
+            android:id="@+id/newName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/newNameText"
+            android:hint="name" />
+
+        <TextView
+            android:id="@+id/newPasswordText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/newNameText"
+            android:text="password: " />
+
+        <TextView
+            android:id="@+id/newPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/newName"
+            android:layout_toRightOf="@id/newPasswordText"
+            android:hint="password" />
+
+        <TextView
+            android:id="@+id/newPasswordText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/newPasswordText"
+            android:text="password confirm: " />
+
+        <TextView
+            android:id="@+id/newPassword2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/newPassword"
+            android:layout_toRightOf="@id/newPasswordText2"
+            android:hint="password" />
+
+        <Button
+            android:id="@+id/registerConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/newPassword2"
+            android:layout_centerHorizontal="true"
+            android:text="@string/register" />
     </RelativeLayout>
 
 </LinearLayout>

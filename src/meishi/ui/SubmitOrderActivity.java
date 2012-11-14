@@ -3,7 +3,6 @@ package meishi.ui;
 import meishi.MainApplication;
 import meishi.db.PreferenceService;
 import meishi.domain.Order;
-import meishi.network.ResponseMessage;
 import meishi.service.BaseAsyncTaskCallBack;
 import meishi.service.OrderService;
 import meishi.utils.GlobalData;
@@ -66,15 +65,10 @@ public class SubmitOrderActivity extends BaseActivity {
 				orderService.submitOrder(order, new BaseAsyncTaskCallBack<Void>(SubmitOrderActivity.this) {
 					@Override
 					public void onSuccess(Void t) {
-						Toast.makeText(SubmitOrderActivity.this, "submit order success", Toast.LENGTH_LONG).show();
+						Toast.makeText(SubmitOrderActivity.this, "submit order success", Toast.LENGTH_SHORT).show();
 						Intent intent = new Intent(SubmitOrderActivity.this, MainActivity.class);
 						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(intent);
-					}
-
-					@Override
-					protected void onOtherError(ResponseMessage responseMessage) {
-						Toast.makeText(SubmitOrderActivity.this, "submit order error", Toast.LENGTH_LONG).show();
 					}
 				});
 			}

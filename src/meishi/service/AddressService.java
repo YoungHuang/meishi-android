@@ -30,4 +30,6 @@ public class AddressService {
 			Log.e(TAG, "initNowAddress", e);
 		}*/
 	}
+	
+	
 }

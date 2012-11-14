@@ -22,14 +22,15 @@
             android:text="@string/my_order" />
         
         <TextView
-            android:id="@+id/orderCount"
+            android:id="@+id/newOrderCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="6.0dip"
             android:textColor="#ff333333"
             android:textSize="18.0dip"
-            android:layout_toRightOf="@id/orderTxt" />
+            android:layout_toRightOf="@id/orderTxt"
+            android:text="(0)" />
 
         <ImageView
             android:layout_width="wrap_content"

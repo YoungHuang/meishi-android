@@ -1,9 +1,11 @@
 package meishi.service;
 
 import meishi.network.ResponseMessage;
+import meishi.ui.AddressActivity;
 import meishi.ui.UserActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 public abstract class BaseAsyncTaskCallBack<T> implements AsyncTaskCallBack<T> {
 	protected Context context;
@@ -22,5 +24,7 @@ public abstract class BaseAsyncTaskCallBack<T> implements AsyncTaskCallBack<T> {
 		}
 	}
 	
-	abstract protected void onOtherError(ResponseMessage responseMessage);
+	protected void onOtherError(ResponseMessage responseMessage) {
+		Toast.makeText(context, responseMessage.getErrorMessage(), Toast.LENGTH_LONG).show();
+	}
 }

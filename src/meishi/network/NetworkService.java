@@ -86,6 +86,43 @@ public class NetworkService {
 		throw ex;
 	}
 
+	public static User register(String path, String name, String password) throws IOException, ResponseException {
+		Log.d(TAG, "sendPostRequest: " + path);
+		StringBuilder sb = new StringBuilder();
+		sb.append("name=").append(name);
+		sb.append("&password=").append(password);
+
+		// 得到实体的二进制数据
+		byte[] entitydata = sb.toString().getBytes();
+		URL url = new URL(path);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("POST");
+		conn.setConnectTimeout(5 * 1000);
+		conn.setDoOutput(true);
+		conn.setRequestProperty("Content-Type", "application/json");
+		conn.setRequestProperty("Content-Length", String.valueOf(entitydata.length));
+		conn.setRequestProperty("cookie", getCookie());
+		OutputStream outStream = conn.getOutputStream();
+		outStream.write(entitydata);
+		outStream.flush();
+		outStream.close();
+		byte[] data;
+		// 通过输入流获取数据
+		InputStream inStream = conn.getInputStream();
+		if (conn.getResponseCode() == 200) {
+			data = readInputStream(inStream);
+			String cookie = conn.getHeaderField("set-cookie");
+			Gson gson = new Gson();
+			String json = new String(data, enc);
+			User user = gson.fromJson(json, User.class);
+			user.setCookie(cookie);
+			return user;
+		}
+		data = readInputStream(inStream);
+		ResponseException ex = contructResponseException(data);
+		throw ex;
+	}
+
 	private static String getCookie() {
 		return PreferenceService.getInstance().getCookie();
 	}
@@ -113,6 +150,20 @@ public class NetworkService {
 			ResponseException {
 		Gson gson = new Gson();
 		byte[] data = sendPostRequest(url, gson.toJson(request), enc);
+		String json = new String(data, enc);
+		T t = gson.fromJson(json, responseType);
+		return t;
+	}
+
+	public static void postForObject(String url, Object request) throws IOException, ResponseException {
+		Gson gson = new Gson();
+		sendPostRequest(url, gson.toJson(request), enc);
+	}
+
+	public static <T> T postForObject(String url, Map<String, String> params, Class<T> responseType)
+			throws IOException, ResponseException {
+		Gson gson = new Gson();
+		byte[] data = sendPostRequest(url, params, enc);
 		String json = new String(data, enc);
 		T t = gson.fromJson(json, responseType);
 		return t;

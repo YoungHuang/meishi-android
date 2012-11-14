@@ -4,6 +4,7 @@ public class ResponseMessage {
 	public final static int FAILED = 1000;
 	public final static int NETWORK_ERROR = 1001;
 	public final static int NOT_LOGIN_ERROR = 1002;
+	public final static int DB_ERROR = 1003;
 	
 	private int errorCode;
 	private String errorMessage;

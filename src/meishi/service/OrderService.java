@@ -11,7 +11,7 @@ import meishi.network.ResponseMessage;
 import android.util.Log;
 
 public class OrderService extends DaoSupport<Order, Integer> {
-	private static final String url = NetworkService.hostUrl + "/order/save";
+	private static final String url = NetworkService.hostUrl + "/order/submit";
 
 	public OrderService() throws SQLException {
 		super(Order.class);
@@ -28,14 +28,9 @@ public class OrderService extends DaoSupport<Order, Integer> {
 
 		@Override
 		protected Void doInBackground(Order... params) {
-			Order order = params[0];
-			String respone;
 			try {
-				respone = NetworkService.postForObject(url, order, String.class);
-				if (!"success".equals(respone)) {
-					responseMessage = new ResponseMessage("Submit order failed!");
-					responseMessage.setErrorCode(ResponseMessage.FAILED);
-				}
+				Order order = NetworkService.postForObject(url, params[0], Order.class);
+				create(order);
 			} catch (IOException e) {
 				Log.e(TAG, "doInBackground", e);
 				responseMessage = new ResponseMessage("Network error!");
@@ -43,6 +38,10 @@ public class OrderService extends DaoSupport<Order, Integer> {
 			} catch (ResponseException e) {
 				Log.e(TAG, "doInBackground", e);
 				responseMessage = e.getResponseMessage();
+			} catch (SQLException e) {
+				Log.e(TAG, "doInBackground", e);
+				responseMessage = new ResponseMessage("Database error!");
+				responseMessage.setErrorCode(ResponseMessage.DB_ERROR);
 			}
 
 			return null;
