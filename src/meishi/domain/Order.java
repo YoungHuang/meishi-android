@@ -3,12 +3,6 @@ package meishi.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.util.Log;
-
 /**
  * 订单
  * 
@@ -18,6 +12,7 @@ import android.util.Log;
 public class Order {
 	public final static Integer STATUS_NEW = 0;
 	public final static Integer STATUS_CONFIRM = 1;
+	public final static String[] STATUS = new String[] {"New", "Confirmed"};
 
 	private Integer id;
 	private Shop shop;

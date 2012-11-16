@@ -5,6 +5,8 @@ import android.content.Intent;
 
 public class BaseActivity extends Activity {
 	protected static String TAG;
+	
+	protected static int MAX_RESULT = 10;
 
 	public BaseActivity() {
 		TAG = this.getClass().getName();

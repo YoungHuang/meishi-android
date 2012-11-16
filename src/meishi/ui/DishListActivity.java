@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import meishi.MainApplication;
+import meishi.adapter.BaseListViewAdapter;
 import meishi.domain.Dish;
 import meishi.domain.DishCategory;
 import meishi.domain.Order;
@@ -14,7 +15,6 @@ import meishi.service.AsyncTaskCallBack;
 import meishi.service.DishCategoryService;
 import meishi.service.DishService;
 import meishi.utils.GlobalData;
-import meishi.utils.ResponseCode;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,8 +33,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class DishListActivity extends BaseActivity implements OnClickListener {
-	private static final int MAX_RESULT = 10;
-
 	private DishCategoryService dishCategoryService;
 	private DishService dishService;
 
@@ -205,28 +203,7 @@ public class DishListActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	private class DishCategoryListAdapter extends BaseAdapter {
-		List<DishCategory> dishCategoryList;
-
-		public DishCategoryListAdapter() {
-			dishCategoryList = new ArrayList<DishCategory>();
-		}
-
-		@Override
-		public int getCount() {
-			return dishCategoryList.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return dishCategoryList.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
+	private class DishCategoryListAdapter extends BaseListViewAdapter<DishCategory> {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Holder holder;
@@ -239,7 +216,7 @@ public class DishListActivity extends BaseActivity implements OnClickListener {
 			} else {
 				holder = (Holder) convertView.getTag();
 			}
-			DishCategory dishCategory = dishCategoryList.get(position);
+			DishCategory dishCategory = itemList.get(position);
 			holder.categoryName.setText(dishCategory.getName());
 			if (dishCategory.isDefaul()) {
 				// TODO
@@ -248,38 +225,12 @@ public class DishListActivity extends BaseActivity implements OnClickListener {
 			return convertView;
 		}
 
-		public void addMoreItems(List<DishCategory> dishCategorys) {
-			dishCategoryList.addAll(dishCategorys);
-			this.notifyDataSetChanged();
-		}
-
 		private class Holder {
 			TextView categoryName;
 		}
 	}
 
-	private class DishListAdapter extends BaseAdapter {
-		List<Dish> dishList;
-
-		public DishListAdapter() {
-			dishList = new ArrayList<Dish>();
-		}
-
-		@Override
-		public int getCount() {
-			return dishList.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return dishList.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return dishList.get(position).getId();
-		}
-
+	private class DishListAdapter extends BaseListViewAdapter<Dish> {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Holder holder;
@@ -293,7 +244,7 @@ public class DishListActivity extends BaseActivity implements OnClickListener {
 			} else {
 				holder = (Holder) convertView.getTag();
 			}
-			Dish dish = dishList.get(position);
+			Dish dish = itemList.get(position);
 			holder.dishName.setText(dish.getName());
 			holder.price.setText(dish.getPrice().toString());
 			OrderItem orderItem = order.findOrderItem(dish.getId());
@@ -305,16 +256,6 @@ public class DishListActivity extends BaseActivity implements OnClickListener {
 			}
 
 			return convertView;
-		}
-
-		public void addMoreItems(List<Dish> dishes) {
-			dishList.addAll(dishes);
-			this.notifyDataSetChanged();
-		}
-
-		public void setItems(List<Dish> dishes) {
-			dishList = dishes;
-			this.notifyDataSetChanged();
 		}
 
 		private class Holder {

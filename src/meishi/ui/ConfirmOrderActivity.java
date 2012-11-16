@@ -2,6 +2,7 @@ package meishi.ui;
 
 import java.util.List;
 
+import meishi.adapter.BaseListViewAdapter;
 import meishi.domain.Dish;
 import meishi.domain.Order;
 import meishi.domain.OrderItem;
@@ -14,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -82,28 +82,12 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 		}
 	}
 	
-	class ListAdapter extends BaseAdapter {
-		private List<OrderItem> dishList;
+	class ListAdapter extends BaseListViewAdapter<OrderItem> {
 		private Context context;
 		
 		public ListAdapter(Context context, List<OrderItem> dishList) {
+			super(dishList);
 			this.context = context;
-			this.dishList = dishList;
-		}
-
-		@Override
-		public int getCount() {
-			return dishList.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return dishList.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return dishList.get(position).getDish().getId();
 		}
 
 		@Override
@@ -111,7 +95,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			Log.d(TAG, "getView");
 			
 			View view = null;
-			final Dish dish = dishList.get(position).getDish();
+			final Dish dish = itemList.get(position).getDish();
 			view = LayoutInflater.from(context).inflate(R.layout.confirm_order_listview, null);
 			TextView dishName = (TextView) view.findViewById(R.id.dishName);
 			dishName.setText(dish.getName());
@@ -121,8 +105,8 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 			TextView minus = (TextView) view.findViewById(R.id.minus);
 			TextView plus = (TextView) view.findViewById(R.id.plus);
 			final TextView countView = (TextView) view.findViewById(R.id.count);
-			final OrderItem orderDish = dishList.get(position);
-			countView.setText(orderDish.getCount().toString());
+			final OrderItem orderItem = itemList.get(position);
+			countView.setText(orderItem.getCount().toString());
 			
 			View.OnClickListener listener = new View.OnClickListener() {
 				@Override
@@ -149,7 +133,7 @@ public class ConfirmOrderActivity extends BaseActivity implements OnClickListene
 						break;
 					}
 					
-					orderDish.setCount(count);
+					orderItem.setCount(count);
 					countView.setText(count.toString());
 					order.setTotalAmount(totalAmount);
 					order.setTotalCount(totalCount);

@@ -9,37 +9,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-public class ShopListAdapter extends BaseAdapter {
+public class ShopListAdapter extends BaseListViewAdapter<Shop> {
 	private Context context;
-	private List<Shop> shopList;
 
 	public ShopListAdapter(Context context) {
 		this(context, new ArrayList<Shop>());
 	}
 	
 	public ShopListAdapter(Context context, List<Shop> shopList) {
+		super(shopList);
 		this.context = context;
-		this.shopList = shopList;
-	}
-
-	@Override
-	public int getCount() {
-		return shopList.size();
-	}
-
-	@Override
-	public Object getItem(int position) {
-		return shopList.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
 	}
 
 	@Override
@@ -57,18 +40,13 @@ public class ShopListAdapter extends BaseAdapter {
 		} else {
 			holder = (Holder) convertView.getTag();
 		}
-		Shop shop = shopList.get(position);
+		Shop shop = itemList.get(position);
 		holder.title.setText(shop.getName());
 		holder.ratingBar.setRating(shop.getRating());
 		holder.startPrice.setText(shop.getStartPrice().toString());
 		holder.commentCount.setText(shop.getCommentCount());
 
 		return convertView;
-	}
-
-	public void addMoreItems(List<Shop> shops) {
-		shopList.addAll(shops);
-		this.notifyDataSetChanged();
 	}
 
 	private class Holder {

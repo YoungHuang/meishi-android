@@ -1,9 +1,9 @@
 package meishi.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import meishi.MainApplication;
+import meishi.adapter.BaseListViewAdapter;
 import meishi.db.PreferenceService;
 import meishi.domain.Area;
 import meishi.domain.City;
@@ -22,7 +22,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -137,28 +136,7 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 		}
 	}
 
-	private class HotAreaAdapter extends BaseAdapter {
-		List<HotArea> hotAreaList;
-
-		public HotAreaAdapter() {
-			hotAreaList = new ArrayList<HotArea>();
-		}
-		
-		@Override
-		public int getCount() {
-			return hotAreaList.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return hotAreaList.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
+	private class HotAreaAdapter extends BaseListViewAdapter<HotArea> {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Holder holder;
@@ -170,15 +148,10 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 			} else {
 				holder = (Holder) convertView.getTag();
 			}
-			HotArea hotArea = hotAreaList.get(position);
+			HotArea hotArea = itemList.get(position);
 			holder.name.setText(hotArea.getName());
 
 			return convertView;
-		}
-
-		public void addMoreItems(List<HotArea> hotAreas) {
-			hotAreaList.addAll(hotAreas);
-			this.notifyDataSetChanged();
 		}
 
 		private class Holder {
