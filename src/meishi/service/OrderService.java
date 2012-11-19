@@ -9,6 +9,7 @@ import java.util.Map;
 
 import meishi.db.DaoSupport;
 import meishi.domain.Order;
+import meishi.domain.OrderItem;
 import meishi.network.NetworkService;
 import meishi.network.ResponseException;
 import meishi.network.ResponseMessage;
@@ -19,6 +20,7 @@ import com.google.gson.reflect.TypeToken;
 public class OrderService extends DaoSupport<Order, Integer> {
 	private static final String URL_SUBMIT_ORDER = NetworkService.hostUrl + "/order/submit";
 	private static final String URL_LIST_ORDER = NetworkService.hostUrl + "/order/list";
+	private static final String URL_LIST_ORDERITEM = NetworkService.hostUrl + "/order/items";
 
 	public OrderService() throws SQLException {
 		super(Order.class);
@@ -33,6 +35,10 @@ public class OrderService extends DaoSupport<Order, Integer> {
 		params.put("offset", offset.toString());
 		params.put("max", max.toString());
 		new LoadOrderListAsyncTask(callBack).execute(params);
+	}
+	
+	public void loadOrderItemList(Integer orderId, AsyncTaskCallBack<List<OrderItem>> callBack) {
+		new LoadOrderItemListAsyncTask(callBack).execute(orderId);
 	}
 
 	private class OrderAsyncTask extends BaseAsyncTask<Order, Void, Void> {
@@ -83,6 +89,31 @@ public class OrderService extends DaoSupport<Order, Integer> {
 			}
 
 			return orderList;
+		}
+	}
+	
+	private class LoadOrderItemListAsyncTask extends BaseAsyncTask<Integer, Void, List<OrderItem>> {
+		public LoadOrderItemListAsyncTask(AsyncTaskCallBack<List<OrderItem>> callBack) {
+			this.callBack = callBack;
+		}
+
+		@Override
+		protected List<OrderItem> doInBackground(Integer... params) {
+			Type type = new TypeToken<List<OrderItem>>() {}.getType();
+			List<OrderItem> orderItemList = null;
+			String url = URL_LIST_ORDERITEM + "/" + params[0];
+			try {
+				orderItemList = NetworkService.getForList(url, type, null);
+			} catch (IOException e) {
+				Log.e(TAG, "doInBackground", e);
+				responseMessage = new ResponseMessage("Network error!");
+				responseMessage.setErrorCode(ResponseMessage.NETWORK_ERROR);
+			} catch (ResponseException e) {
+				Log.e(TAG, "doInBackground", e);
+				responseMessage = e.getResponseMessage();
+			}
+
+			return orderItemList;
 		}
 	}
 }
