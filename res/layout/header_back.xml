@@ -6,14 +6,14 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/leftBtn"
+        android:id="@+id/backBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="6.0dip"
-        android:background="@drawable/selector_btn_header"
+        android:background="@drawable/selector_btn_back"
         android:gravity="center"
-        android:text="Button"
+        android:text="@string/back"
         android:textColor="@color/white"
         android:textSize="12.0sp" />
 
@@ -26,18 +26,4 @@
         android:text="@string/home_title"
         android:textColor="@color/white"
         android:textSize="20.0sp" />
-
-    <Button
-        android:id="@+id/rightBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="6.0dip"
-        android:background="@drawable/selector_btn_header"
-        android:gravity="center"
-        android:text="Button"
-        android:textColor="@color/white"
-        android:textSize="12.0sp" />
-
 </RelativeLayout>

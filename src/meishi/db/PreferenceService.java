@@ -34,6 +34,7 @@ public class PreferenceService {
 
 	public PreferenceService() {
 		instance = this;
+		application = MainApplication.getInstance();
 		preferences = application.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
 	}
 	
@@ -49,6 +50,9 @@ public class PreferenceService {
 	public City getCity() {
 		if (city == null) {
 			String name = preferences.getString(CITY_NAME, null);
+			if (name == null) {
+				return null;
+			}
 			city = application.getCityService().findByName(name);
 		}
 

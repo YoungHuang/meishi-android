@@ -12,7 +12,6 @@ import meishi.network.ResponseMessage;
 import meishi.service.AreaService;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.HotAreaService;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,15 +21,14 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class HomeActivity extends Activity implements View.OnClickListener, OnItemClickListener {
-	private static final String TAG = "HomeActivity";
-
+public class HomeActivity extends BaseActivity implements View.OnClickListener, OnItemClickListener {
 	private PreferenceService preferenceService;
 	private HotAreaService hotAreaService;
 	private AreaService areaService;
@@ -50,8 +48,15 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 
 		EditText keywords = (EditText) this.findViewById(R.id.keywords);
 		keywords.setOnClickListener(this);
-
-		initHotAreaList();
+		
+		city = preferenceService.getCity();
+		if (city == null) {
+			Intent intent = new Intent(this, CitySelectActivity.class);
+			startActivityForResult(intent, 0);
+		} else {
+			initCity();
+			initHotAreaList();
+		}
 	}
 
 	private void initVariables() {
@@ -59,8 +64,13 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 		hotAreaService = application.getHotAreaService();
 		preferenceService = application.getPreferenceService();
 		areaService = application.getAreaService();
+	}
+	
+	private void initCity() {
+		Button rightBtn =  (Button) findViewById(R.id.rightBtn);
+		rightBtn.setOnClickListener(this);
 		
-		city = preferenceService.getCity();
+		rightBtn.setText(city.getName());
 	}
 
 	private void initHotAreaList() {
@@ -113,11 +123,24 @@ public class HomeActivity extends Activity implements View.OnClickListener, OnIt
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		boolean changed = data.getBooleanExtra("CityChanged", false);
+		if (changed) {
+			city = preferenceService.getCity();
+			initCity();
+			initHotAreaList();
+		}
+	}
+
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.rightBtn:
+			Intent intent = new Intent(this, CitySelectActivity.class);
+			startActivityForResult(intent, 0);
+			break;
 		case R.id.keywords:
-			Intent intent = new Intent(this, SearchActivity.class);
-			this.startActivity(intent);
+			startActivity(SearchActivity.class);
 			break;
 		}
 	}

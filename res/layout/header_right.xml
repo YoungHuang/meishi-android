@@ -5,18 +5,6 @@
     android:background="@drawable/shape_title"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/leftBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="6.0dip"
-        android:background="@drawable/selector_btn_header"
-        android:gravity="center"
-        android:text="Button"
-        android:textColor="@color/white"
-        android:textSize="12.0sp" />
-
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"

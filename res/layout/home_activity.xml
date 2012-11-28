@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <!-- 标题 -->
-    <include layout="@layout/header" />
+    <include layout="@layout/header_right" />
 
     <!-- 搜索栏 -->
     <LinearLayout
