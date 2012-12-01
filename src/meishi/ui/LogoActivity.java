@@ -22,7 +22,7 @@ public class LogoActivity extends Activity {
 		
 		ImageView imageView = (ImageView) this.findViewById(R.id.logo_bg);
 		AlphaAnimation alphaAnimation = new AlphaAnimation(0.1f, 1.0f);
-        alphaAnimation.setDuration(3000);
+        alphaAnimation.setDuration(100);
         imageView.startAnimation(alphaAnimation);
         
         alphaAnimation.setAnimationListener(new AnimationListener() {
@@ -36,9 +36,9 @@ public class LogoActivity extends Activity {
 			
 			@Override
 			public void onAnimationEnd(Animation animation) {
-//				Intent intent = new Intent(LogoActivity.this, MainActivity.class);
-//				startActivity(intent);
-//				finish();
+				Intent intent = new Intent(LogoActivity.this, MainActivity.class);
+				startActivity(intent);
+				finish();
 			}
 		});
 		
@@ -49,8 +49,8 @@ public class LogoActivity extends Activity {
 		Log.d(TAG, "init");
 		
 		// 启动MainService
-		Intent mainService = new Intent("meishi.service.MainService");
-		startService(mainService);
+//		Intent mainService = new Intent("meishi.service.MainService");
+//		startService(mainService);
 		
 		// 检查网络
 		if (!NetworkService.isNetworkActive(this)) {

@@ -124,11 +124,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		boolean changed = data.getBooleanExtra("CityChanged", false);
-		if (changed) {
-			city = preferenceService.getCity();
-			initCity();
-			initHotAreaList();
+		if (data != null) {
+			boolean changed = data.getBooleanExtra("CityChanged", false);
+			if (changed) {
+				city = preferenceService.getCity();
+				initCity();
+				initHotAreaList();
+			}
 		}
 	}
 

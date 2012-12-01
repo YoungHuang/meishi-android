@@ -10,5 +10,6 @@ public class CitySelectActivity extends BaseActivity {
 		Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		
+		
 	}
 }
