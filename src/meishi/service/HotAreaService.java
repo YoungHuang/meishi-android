@@ -47,7 +47,7 @@ public class HotAreaService extends DaoSupport<HotArea, Integer> {
 			Log.e(TAG, "loadAll() exception", e);
 		}
 
-		if (hotAreaList == null) {
+		if (hotAreaList == null || hotAreaList.isEmpty()) {
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("cityId", cityId.toString());
 			new HotAreaAsyncTask(callBack).execute(params);

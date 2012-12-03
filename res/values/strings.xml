@@ -47,5 +47,8 @@
     <string name="my_order">我的订单</string>
     <string name="my_address">我的地址</string>
     <string name="back">返回</string>
+    <string name="gps_city">GPS定位</string>
+    <string name="gps_positioning">正在定位城市...</string>
+    <string name="hot_cities">热门城市</string>
 
 </resources>
