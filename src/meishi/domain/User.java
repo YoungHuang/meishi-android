@@ -1,18 +1,27 @@
 package meishi.domain;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 /**
  * 用户
  * @author yhuang
  *
  */
+@DatabaseTable
 public class User {
+	@DatabaseField(id = true)
 	private Integer id;
 	/** 姓名 **/
+	@DatabaseField
 	private String name;
 	/** 地址 **/
+	@DatabaseField
 	private String address;
 	/** 电话 **/
+	@DatabaseField
 	private String phone;
+	@DatabaseField
 	private String cookie;
 	
 	public Integer getId() {

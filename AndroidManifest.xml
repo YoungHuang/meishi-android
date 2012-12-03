@@ -38,7 +38,10 @@
             android:name=".ConfirmOrderActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".ShopSearchActivity2"
+            android:name=".ShopSearchActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".CitySelectActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 

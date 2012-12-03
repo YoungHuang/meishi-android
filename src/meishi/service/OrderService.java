@@ -2,12 +2,10 @@ package meishi.service;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import meishi.db.DaoSupport;
 import meishi.domain.Order;
 import meishi.domain.OrderItem;
 import meishi.network.NetworkService;
@@ -17,16 +15,13 @@ import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 
-public class OrderService extends DaoSupport<Order, Integer> {
+public class OrderService {
+	private static final String TAG = "OrderService";
 	private static final String URL_SUBMIT_ORDER = NetworkService.hostUrl + "/order/submit";
 	private static final String URL_LIST_ORDER = NetworkService.hostUrl + "/order/list";
 	private static final String URL_LIST_ORDERITEM = NetworkService.hostUrl + "/order/items";
 
-	public OrderService() throws SQLException {
-		super(Order.class);
-	}
-
-	public void submitOrder(Order order, AsyncTaskCallBack<Void> callBack) {
+	public void submitOrder(Order order, AsyncTaskCallBack<Order> callBack) {
 		new OrderAsyncTask(callBack).execute(order);
 	}
 	
@@ -41,16 +36,16 @@ public class OrderService extends DaoSupport<Order, Integer> {
 		new LoadOrderItemListAsyncTask(callBack).execute(orderId);
 	}
 
-	private class OrderAsyncTask extends BaseAsyncTask<Order, Void, Void> {
-		public OrderAsyncTask(AsyncTaskCallBack<Void> callBack) {
+	private class OrderAsyncTask extends BaseAsyncTask<Order, Void, Order> {
+		public OrderAsyncTask(AsyncTaskCallBack<Order> callBack) {
 			this.callBack = callBack;
 		}
 
 		@Override
-		protected Void doInBackground(Order... params) {
+		protected Order doInBackground(Order... params) {
+			Order order = null;
 			try {
-				Order order = NetworkService.postForObject(URL_SUBMIT_ORDER, params[0], Order.class);
-				create(order);
+				order = NetworkService.postForObject(URL_SUBMIT_ORDER, params[0], Order.class);
 			} catch (IOException e) {
 				Log.e(TAG, "doInBackground", e);
 				responseMessage = new ResponseMessage("Network error!");
@@ -58,13 +53,9 @@ public class OrderService extends DaoSupport<Order, Integer> {
 			} catch (ResponseException e) {
 				Log.e(TAG, "doInBackground", e);
 				responseMessage = e.getResponseMessage();
-			} catch (SQLException e) {
-				Log.e(TAG, "doInBackground", e);
-				responseMessage = new ResponseMessage("Database error!");
-				responseMessage.setErrorCode(ResponseMessage.DB_ERROR);
 			}
 
-			return null;
+			return order;
 		}
 	}
 	

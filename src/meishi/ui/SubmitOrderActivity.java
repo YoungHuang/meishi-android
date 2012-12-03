@@ -62,9 +62,9 @@ public class SubmitOrderActivity extends BaseActivity {
 		submitButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				orderService.submitOrder(order, new BaseAsyncTaskCallBack<Void>(SubmitOrderActivity.this) {
+				orderService.submitOrder(order, new BaseAsyncTaskCallBack<Order>(SubmitOrderActivity.this) {
 					@Override
-					public void onSuccess(Void t) {
+					public void onSuccess(Order order) {
 						Toast.makeText(SubmitOrderActivity.this, "submit order success", Toast.LENGTH_SHORT).show();
 						Intent intent = new Intent(SubmitOrderActivity.this, MainActivity.class);
 						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
