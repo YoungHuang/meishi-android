@@ -9,6 +9,7 @@ import meishi.domain.City;
 import meishi.network.ResponseMessage;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.CityService;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,7 +71,15 @@ public class CitySelectActivity extends BaseActivity implements OnItemClickListe
 	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		
+		City city = preferenceService.getCity();
+		City newCity = (City) adapter.getItem(position);
+		boolean changed = false;
+		if (city == null || !city.getId().equals(newCity.getId())) {
+			changed = true;
+		}
+		Intent intent = new Intent();
+		intent.putExtra("CityChanged", changed);
+		this.setResult(0, intent);
 	}
 	
 	private class HotCityListAdapter extends BaseListViewAdapter<City> {
