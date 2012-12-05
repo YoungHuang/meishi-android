@@ -95,15 +95,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 	}
 
 	private void loadInitData() {
-		final LinearLayout loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
 		final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		final TextView loadingMessage = (TextView) findViewById(R.id.loadingMessage);
-		final TextView retryButton = (TextView) findViewById(R.id.retryButton);
 		progressBar.setVisibility(View.VISIBLE);
 		
 		hotAreaService.loadAll(city.getId(), new AsyncTaskCallBack<List<HotArea>>() {
 			@Override
 			public void onSuccess(List<HotArea> hotAreaList) {
+				LinearLayout loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
 				loadingLayout.setVisibility(View.GONE);
 				hotAreaListView.setVisibility(View.VISIBLE);
 				HotArea moreArea = new HotArea();
@@ -115,6 +113,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
 			@Override
 			public void onError(ResponseMessage responseMessage) {
+				TextView loadingMessage = (TextView) findViewById(R.id.loadingMessage);
+				TextView retryButton = (TextView) findViewById(R.id.retryButton);
 				progressBar.setVisibility(View.GONE);
 				loadingMessage.setVisibility(View.GONE);
 				retryButton.setVisibility(View.VISIBLE);
