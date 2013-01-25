@@ -10,6 +10,7 @@ import meishi.network.ResponseMessage;
 import meishi.service.AsyncTaskCallBack;
 import meishi.service.CityService;
 import meishi.utils.LocationUtils;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -139,7 +140,7 @@ public class CitySelectActivity extends BaseActivity implements OnItemClickListe
 		preferenceService.setCity(city);
 		Intent intent = new Intent();
 		intent.putExtra("CityChanged", changed);
-		this.setResult(0, intent);
+		this.setResult(Activity.RESULT_OK, intent);
 		finish();
 	}
 
