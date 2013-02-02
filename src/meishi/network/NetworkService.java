@@ -26,7 +26,7 @@ public class NetworkService {
 
 	public static String enc = "UTF-8";
 
-	public static final String hostUrl = "http://10.60.4.66:8080/meishi";
+	public static final String hostUrl = "http://192.168.0.106:8080/meishi";
 
 	// 检查当前网络是否已经连接
 	public static boolean isNetworkActive(Context context) {

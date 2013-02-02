@@ -8,8 +8,9 @@
     <include layout="@layout/header_back" />
 
     <LinearLayout
+        android:id="@+id/bodyLayout"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
+        android:layout_height="wrap_content"
         android:visibility="gone" >
 
         <TextView
