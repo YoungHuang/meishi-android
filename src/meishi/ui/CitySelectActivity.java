@@ -96,8 +96,8 @@ public class CitySelectActivity extends BaseActivity implements OnItemClickListe
 			public void onSuccess(List<City> cityList) {
 				LinearLayout loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
 				loadingLayout.setVisibility(View.GONE);
-				LinearLayout bodyLayout = (LinearLayout) findViewById(R.id.bodyLayout);
-				bodyLayout.setVisibility(View.VISIBLE);
+				ListView hotCityListView = (ListView) findViewById(R.id.hotCityList);
+				hotCityListView.setVisibility(View.VISIBLE);
 				if (cityList != null) {
 					adapter.addMoreItems(cityList);
 				}
